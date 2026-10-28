@@ -21,9 +21,13 @@
       chefSign: "Personaje de demostración",
       counterCaption: "La barra · madera de hinoki · doce asientos",
       resEyebrow: "Reservas", resTitle: "Reservad vuestra noche",
-      resIntro: "Dos pases, de martes a sábado. El de las 21:30 es el favorito de las parejas. Os confirmamos por WhatsApp.",
-      resDay: "Día", resTime: "Pase", resGuests: "Personas", vizLabel: "Vuestros asientos en la barra",
-      resBtn: "Solicitar reserva por WhatsApp", resFine: "Demo · el número de WhatsApp es de ejemplo.",
+      resIntro: "Dos pases, de martes a sábado. Elegid vuestra noche y os la confirmamos por WhatsApp.",
+      resDay: "El día", resTime: "El pase", resGuests: "Personas",
+      time1: "Primer pase", time2: "El favorito de las parejas", seating2: "Segundo pase",
+      less: "Una persona menos", more: "Una persona más", left: "Quedan <b>{n}</b> de 12 asientos",
+      lgYours: "Vuestros", lgTaken: "Reservados", lgFree: "Libres", ticketK: "Vuestra noche",
+      pol1k: "Menú omakase", pol1v: "165 € por persona", pol2k: "Maridaje de sake", pol2v: "85 €, opcional", pol3k: "Cancelación", pol3v: "Gratis hasta 24 h antes",
+      resBtn: "Reservar por WhatsApp", resFine: "Demo · el número de WhatsApp es de ejemplo.",
       visitEyebrow: "Visita", visitArea: "Chamberí · Madrid · Metro Bilbao o San Bernardo", directions: "Cómo llegar",
       tueSat: "Martes – sábado", sunMon: "Domingo y lunes", closed: "Cerrado", phone: "Teléfono",
       legal: "Aviso legal", privacy: "Privacidad", cookies: "Cookies",
@@ -51,9 +55,13 @@
       chefSign: "Demo character",
       counterCaption: "The counter · hinoki wood · twelve seats",
       resEyebrow: "Reservations", resTitle: "Book your evening",
-      resIntro: "Two seatings, Tuesday to Saturday. The 21:30 one is the couples' favourite. We confirm on WhatsApp.",
-      resDay: "Day", resTime: "Seating", resGuests: "Guests", vizLabel: "Your seats at the counter",
-      resBtn: "Request a booking on WhatsApp", resFine: "Demo · the WhatsApp number is a placeholder.",
+      resIntro: "Two seatings, Tuesday to Saturday. Pick your night and we'll confirm it on WhatsApp.",
+      resDay: "The day", resTime: "The seating", resGuests: "Guests",
+      time1: "First seating", time2: "Couples' favourite", seating2: "Second seating",
+      less: "One guest fewer", more: "One more guest", left: "<b>{n}</b> of 12 seats left",
+      lgYours: "Yours", lgTaken: "Booked", lgFree: "Free", ticketK: "Your evening",
+      pol1k: "Omakase menu", pol1v: "€165 per person", pol2k: "Sake pairing", pol2v: "€85, optional", pol3k: "Cancellation", pol3v: "Free up to 24 h before",
+      resBtn: "Book via WhatsApp", resFine: "Demo · the WhatsApp number is a placeholder.",
       visitEyebrow: "Visit", visitArea: "Chamberí · Madrid · Metro Bilbao or San Bernardo", directions: "Directions",
       tueSat: "Tuesday – Saturday", sunMon: "Sunday and Monday", closed: "Closed", phone: "Phone",
       legal: "Legal notice", privacy: "Privacy", cookies: "Cookies",
@@ -266,6 +274,7 @@
     gsap.from(".counter-caption", { opacity: 0, y: 20, duration: 1.2, scrollTrigger: { trigger: ".counter-band", start: "center 75%" } });
 
     // booking panel and visit
+    gsap.from(".policy li", { opacity: 0, y: 16, duration: 1, ease: "power3.out", stagger: 0.08, scrollTrigger: { trigger: ".policy", start: "top 92%" } });
     gsap.from(".booker > *", { opacity: 0, y: 26, duration: 1, ease: "power3.out", stagger: 0.08, scrollTrigger: { trigger: ".booker", start: "top 82%" } });
     gsap.from(".hours div", { opacity: 0, x: 30, duration: 1, ease: "power3.out", stagger: 0.08, scrollTrigger: { trigger: ".hours", start: "top 88%" } });
     gsap.fromTo("#bigword", { xPercent: 0 }, { xPercent: -33.333, ease: "none", scrollTrigger: { trigger: ".visit", start: "top bottom", end: "bottom top", scrub: true } });
@@ -284,7 +293,7 @@
   }
 
   /* ---------------- booking ---------------- */
-  var state = { day: null, time: TIMES[0], guests: 2 };
+  var state = { day: 0, time: TIMES[0], guests: 2 };
   var days = [];
   (function buildDays() {
     var d = new Date(); d.setHours(12, 0, 0, 0);
@@ -293,50 +302,136 @@
       var wd = d.getDay();
       if (wd >= 2 && wd <= 6) days.push(new Date(d));
     }
-    state.day = 0;
   })();
+  function $(id) { return document.getElementById(id); }
   function loc() { return lang === "es" ? "es-ES" : "en-GB"; }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function money(n) { var t = Math.round(n).toLocaleString(loc()); return lang === "es" ? t + " €" : "€" + t; }
+  var dayBox = $("days"), timeBox = $("times"), minus = $("minus"), plus = $("plus"), countEl = $("guests");
+  var seatsLeft = $("seatsLeft"), tDate = $("tDate"), tMeta = $("tMeta"), tCalc = $("tCalc"), tTotal = $("tTotal"), waBtn = $("waBtn");
+
+  // day tiles are built once; a language switch only rewrites their labels (no re-render, no flicker)
   function renderDays() {
-    var box = document.getElementById("days");
-    box.innerHTML = days.map(function (d, i) {
-      var wd = d.toLocaleDateString(loc(), { weekday: "short" }).replace(".", "");
-      var dm = d.toLocaleDateString(loc(), { day: "numeric", month: "short" }).replace(".", "");
-      return '<button type="button" class="chip" data-i="' + i + '" aria-pressed="' + (i === state.day) + '"><span class="d">' + wd + "</span>" + dm + "</button>";
-    }).join("");
-    box.querySelectorAll(".chip").forEach(function (b) {
-      b.addEventListener("click", function () { state.day = +b.dataset.i; renderDays(); update(); });
+    if (!dayBox.querySelector(".opt")) {
+      dayBox.insertAdjacentHTML("beforeend", days.map(function (d, i) {
+        return '<label class="opt"><input type="radio" name="day" value="' + i + '"' + (i === state.day ? " checked" : "") +
+          '><span class="opt-wd"></span><span class="opt-dd">' + d.getDate() + '</span><span class="opt-mo"></span></label>';
+      }).join(""));
+    }
+    qsa("#days .opt").forEach(function (l, i) {
+      var d = days[i];
+      l.querySelector(".opt-wd").textContent = d.toLocaleDateString(loc(), { weekday: "short" }).replace(".", "");
+      l.querySelector(".opt-mo").textContent = d.toLocaleDateString(loc(), { month: "short" }).replace(".", "");
+      l.querySelector("input").setAttribute("aria-label", d.toLocaleDateString(loc(), { weekday: "long", day: "numeric", month: "long" }));
     });
   }
-  document.querySelectorAll("#times .chip").forEach(function (b) {
-    b.addEventListener("click", function () {
-      state.time = b.dataset.time;
-      document.querySelectorAll("#times .chip").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
-      update();
+
+  // one highlight glides to whichever option is checked
+  function syncSeg(box, instant) {
+    var on = null;
+    box.querySelectorAll(".opt").forEach(function (l) {
+      var c = l.querySelector("input").checked;
+      l.classList.toggle("on", c);
+      if (c) on = l;
     });
-  });
-  var minus = document.getElementById("minus"), plus = document.getElementById("plus"), out = document.getElementById("guests");
-  minus.addEventListener("click", function () { if (state.guests > 1) { state.guests--; update(); } });
-  plus.addEventListener("click", function () { if (state.guests < 6) { state.guests++; update(); } });
+    if (!on || !on.offsetWidth) return;
+    var ind = box.querySelector(".seg-ind");
+    if (instant) box.classList.add("instant");
+    ind.style.width = on.offsetWidth + "px";
+    ind.style.height = on.offsetHeight + "px";
+    ind.style.transform = "translate(" + on.offsetLeft + "px," + on.offsetTop + "px)";
+    if (instant) { void ind.offsetWidth; box.classList.remove("instant"); }
+    box.classList.add("ready");
+  }
+  function syncAll() { syncSeg(dayBox, true); syncSeg(timeBox, true); }
+  dayBox.addEventListener("change", function (e) { state.day = +e.target.value; syncSeg(dayBox); update("day"); });
+  timeBox.addEventListener("change", function (e) { state.time = e.target.value; syncSeg(timeBox); update("time"); });
+  if ("ResizeObserver" in window) { var ro = new ResizeObserver(syncAll); ro.observe(dayBox); ro.observe(timeBox); }
+  else window.addEventListener("resize", syncAll);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncAll);
 
-  var seatsBox = document.getElementById("seats");
+  // guests: the number rolls up or down
+  function roll(el, text, dir) {
+    var olds = el.querySelectorAll("span:not(.out)"), nu = document.createElement("span");
+    nu.textContent = text; el.appendChild(nu);
+    if (reduce || !nu.animate) { olds.forEach(function (o) { o.remove(); }); return; }
+    var y = dir > 0 ? 70 : -70;
+    olds.forEach(function (o) {
+      o.classList.add("out");
+      o.animate([{ transform: "none", opacity: 1 }, { transform: "translateY(" + (-y) + "%)", opacity: 0 }], { duration: 260, easing: "cubic-bezier(.5,0,.75,0)", fill: "forwards" }).onfinish = function () { o.remove(); };
+    });
+    nu.animate([{ transform: "translateY(" + y + "%)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 420, easing: "cubic-bezier(.2,.9,.3,1.25)" });
+  }
+  function setGuests(n, dir) {
+    n = Math.max(1, Math.min(6, n));
+    if (n === state.guests) return;
+    state.guests = n;
+    roll(countEl, n, dir);
+    update("guests");
+  }
+  minus.addEventListener("click", function () { setGuests(state.guests - 1, -1); });
+  plus.addEventListener("click", function () { setGuests(state.guests + 1, 1); });
+
+  // the counter: some seats already booked (fixed per night, so it feels real), yours light up together
+  var seatsBox = $("seats");
   seatsBox.innerHTML = new Array(12).fill(0).map(function () { return '<span class="seat"></span>'; }).join("");
-  var seatOrder = [5, 6, 4, 7, 3, 8, 2, 9, 1, 10, 0, 11];
+  var seatEls = seatsBox.children;
+  function rng(a) { return function () { a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function counterFor() {
+    var d = days[state.day], late = state.time === TIMES[1];
+    var r = rng(d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate() + (late ? 7919 : 0));
+    var start = Math.floor(r() * 7), taken = [];               // seats start..start+5 always stay free
+    for (var i = 0; i < 12; i++) if ((i < start || i > start + 5) && r() < (late ? 0.72 : 0.45)) taken.push(i);
+    var a = start, b = start + 5;
+    while (a > 0 && taken.indexOf(a - 1) < 0) a--;
+    while (b < 11 && taken.indexOf(b + 1) < 0) b++;
+    return { taken: taken, a: a, b: b };
+  }
+  function paintSeats() {
+    var c = counterFor(), g = state.guests;
+    var s = Math.max(c.a, Math.min(c.b - g + 1, Math.round(5.5 - (g - 1) / 2))), mid = s + (g - 1) / 2;
+    for (var i = 0; i < 12; i++) {
+      var el = seatEls[i], mine = i >= s && i < s + g, was = el.classList.contains("on");
+      el.style.transitionDelay = mine && !was ? Math.round(Math.abs(i - mid) * 70) + "ms" : "0ms";
+      el.classList.toggle("on", mine);
+      el.classList.toggle("taken", c.taken.indexOf(i) >= 0);
+    }
+    return 12 - c.taken.length;
+  }
 
-  function update() {
-    if (state.day == null) return;
-    var d = T[lang], g = state.guests;
-    out.textContent = g;
+  // the ticket: total counts to its new value, changed lines settle in
+  var shown = null, raf = 0;
+  function setTotal(n) {
+    cancelAnimationFrame(raf);
+    var from = shown == null ? n : shown;
+    if (reduce || from === n) { shown = n; tTotal.textContent = money(n); return; }
+    var t0 = performance.now();
+    (function step(now) {
+      var k = Math.min(1, (now - t0) / 520), e = 1 - Math.pow(1 - k, 3);
+      shown = from + (n - from) * e;
+      tTotal.textContent = money(shown);
+      if (k < 1) raf = requestAnimationFrame(step); else shown = n;
+    })(t0);
+  }
+  function settle(el) {
+    if (reduce || !el.animate) return;
+    el.animate([{ opacity: 0.2, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 480, easing: "cubic-bezier(.2,.8,.2,1)" });
+  }
+
+  function update(what) {
+    var d = T[lang], g = state.guests, gw = g === 1 ? d.guest1 : d.guestN;
     minus.disabled = g <= 1; plus.disabled = g >= 6;
-    var seats = seatsBox.children;
-    for (var i = 0; i < 12; i++) seats[i].classList.remove("on");
-    for (var j = 0; j < g; j++) (function (k, delay) { setTimeout(function () { seats[k].classList.add("on"); }, delay); })(seatOrder[j], j * 70);
+    minus.setAttribute("aria-label", d.less); plus.setAttribute("aria-label", d.more);
+    seatsLeft.innerHTML = d.left.replace("{n}", paintSeats());
     var dateLong = cap(days[state.day].toLocaleDateString(loc(), { weekday: "long", day: "numeric", month: "long" }));
-    var total = (PRICE * g).toLocaleString(loc()) ;
-    var priceTxt = lang === "es" ? total + "\u00a0€" : "€" + total;
-    document.getElementById("summary").textContent = dateLong + " · " + state.time + " · " + g + "\u00a0" + (g === 1 ? d.guest1 : d.guestN) + " · " + priceTxt;
-    var msg = d.wa.replace("{date}", lang === "es" ? dateLong.toLowerCase() : dateLong).replace("{time}", state.time).replace("{n}", g).replace("{g}", g === 1 ? d.guest1 : d.guestN);
-    document.getElementById("waBtn").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
+    tDate.textContent = dateLong;
+    tMeta.textContent = state.time + " · " + (state.time === TIMES[0] ? d.time1 : d.seating2) + " · " + g + " " + gw;
+    tCalc.textContent = money(PRICE) + " × " + g;
+    setTotal(PRICE * g);
+    if (what === "day") settle(tDate);
+    if (what === "time" || what === "guests") settle(tMeta);
+    var msg = d.wa.replace("{date}", lang === "es" ? dateLong.toLowerCase() : dateLong).replace("{time}", state.time).replace("{n}", g).replace("{g}", gw);
+    waBtn.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
   }
 
   applyLang();
