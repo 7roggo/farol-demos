@@ -341,8 +341,12 @@ figcaption { margin-top: .9rem; font-size: .72rem; letter-spacing: .22em; text-t
 }
 
 /* ---------- counter band ---------- */
-.counter-band { position: relative; background: var(--sumi); }
-.counter-band img { width: 100%; height: clamp(320px, 62vw, 760px); object-fit: cover; opacity: .9; }
+.counter-band { position: relative; background: var(--sumi); overflow: hidden; }
+.counter-band img { width: 100%; height: clamp(320px, 62vw, 760px); object-fit: cover; filter: brightness(.72) contrast(1.08) saturate(.9) sepia(.12); }
+.counter-band::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 90% at 55% 35%, transparent 40%, rgba(6,5,5,.55) 100%),
+              linear-gradient(to bottom, var(--sumi) 0%, transparent 18%, transparent 62%, rgba(6,5,5,.85) 100%); }
+.counter-caption { z-index: 1; }
 .counter-caption { position: absolute; left: 0; right: 0; bottom: 1.4rem; margin: 0 auto; color: rgba(236,235,230,.8); font-size: .72rem; letter-spacing: .26em; text-transform: uppercase; }
 
 /* ---------- reservations ---------- */
