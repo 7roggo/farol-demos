@@ -481,7 +481,8 @@ legend { padding: 0; margin-bottom: .8rem; font-size: .72rem; letter-spacing: .2
   .pieces-pin { min-height: 0; padding-block: 4rem 3rem; }
   .pieces-track { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: .5rem; }
   .pieces-track::-webkit-scrollbar { display: none; }
-  .piece { width: 82vw; height: 62vh; scroll-snap-align: center; }
+  .piece { width: 80vw; height: auto; aspect-ratio: 4 / 5; max-height: 64svh; scroll-snap-align: center; }
+  .piece img { transform: none; }
   .piece-end { width: 76vw; }
 }
 

@@ -164,7 +164,10 @@
 
   /* ---------------- header, progress line, sticky CTA ---------------- */
   var hdr = document.getElementById("hdr"), hero = qs(".hero"), cta = qs(".sticky-cta"), res = document.getElementById("reservas"), prog = document.getElementById("progress");
-  var lastY = 0;
+  var lastY = 0, resInView = false;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { resInView = es[0].isIntersecting; onScroll(); }, { threshold: 0 }).observe(res);
+  }
   function onScroll() {
     var y = window.scrollY, h = hero.offsetHeight;
     hdr.classList.toggle("solid", y > h - 90);
@@ -173,8 +176,7 @@
     lastY = y;
     var max = document.documentElement.scrollHeight - window.innerHeight;
     prog.style.transform = "scaleX(" + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ")";
-    var r = res.getBoundingClientRect();
-    cta.classList.toggle("show", y > h * 0.6 && !(r.top < window.innerHeight && r.bottom > 0));
+    cta.classList.toggle("show", y > h * 0.6 && !resInView);
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
