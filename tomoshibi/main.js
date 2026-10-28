@@ -192,8 +192,8 @@
     for (var j = 0; j < g; j++) (function (k, delay) { setTimeout(function () { seats[k].classList.add("on"); }, delay); })(seatOrder[j], j * 70);
     var dateLong = cap(days[state.day].toLocaleDateString(loc(), { weekday: "long", day: "numeric", month: "long" }));
     var total = (PRICE * g).toLocaleString(loc()) ;
-    var priceTxt = lang === "es" ? total + " €" : "€" + total;
-    document.getElementById("summary").textContent = dateLong + " · " + state.time + " · " + g + " " + (g === 1 ? d.guest1 : d.guestN) + " · " + priceTxt;
+    var priceTxt = lang === "es" ? total + "\u00a0€" : "€" + total;
+    document.getElementById("summary").textContent = dateLong + " · " + state.time + " · " + g + "\u00a0" + (g === 1 ? d.guest1 : d.guestN) + " · " + priceTxt;
     var msg = d.wa.replace("{date}", lang === "es" ? dateLong.toLowerCase() : dateLong).replace("{time}", state.time).replace("{n}", g).replace("{g}", g === 1 ? d.guest1 : d.guestN);
     document.getElementById("waBtn").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
   }
