@@ -518,3 +518,5 @@ legend { padding: 0; margin-bottom: .8rem; font-size: .72rem; letter-spacing: .2
 /* GSAP drives these transforms, so CSS transitions must not fight it */
 .gsap .hero-media img, .gsap .revealed .hero-media img { transition: none; }
 .lenis.lenis-stopped { overflow: hidden; }
+/* keep slide-in start states from widening the page */
+main, .ftr { overflow-x: clip; }
