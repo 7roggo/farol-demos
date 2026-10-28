@@ -8,11 +8,11 @@
       introSub: "Omakase · Madrid", skip: "Entrar",
       navOmakase: "Omakase", navMenu: "Menú", navChef: "Chef", navVisit: "Visita", reserve: "Reservar",
       heroEyebrow: "Omakase · Chamberí, Madrid",
-      heroTitle: "Doce asientos.<br>Un chef.<br>Una barra de hinoki.",
-      heroCta: "Reservar una noche", heroMeta: "Martes a sábado · 19:00 y 21:30",
+      heroTitle: "Luz baja.<br>Doce asientos.<br>Una noche para dos.",
+      heroCta: "Reservar vuestra noche", heroMeta: "Martes a sábado · 19:00 y 21:30",
       omakaseEyebrow: "Omakase · お任せ",
-      statement: "Cada noche, el chef decide. Pescado elegido esa mañana, arroz a la temperatura de la piel y nada más de lo necesario.",
-      fact1: "asientos frente a la barra", fact2: "piezas, al ritmo del chef", fact3: "sin prisa, de principio a fin", fact4: "por persona · maridaje de sake 85 €",
+      statement: "Aquí se cena despacio. Luz de vela, sake frío y el chef sirviendo cada pieza en vuestro plato, una a una, mientras Madrid sigue ahí fuera.",
+      fact1: "asientos frente a la barra", fact2: "piezas, al ritmo del chef", fact3: "sin prisa, solo vosotros dos", fact4: "por persona · maridaje de sake 85 €",
       menuCaption: "Nigiri de la barra · otoño", menuEyebrow: "Menú de temporada · Otoño", menuTitle: "El recorrido de la noche",
       menuNote: "El menú cambia con la lonja. Avísanos de cualquier alergia al reservar.",
       chefEyebrow: "El chef",
@@ -20,14 +20,17 @@
       chefP2: "En Madrid trabaja con atún rojo de almadraba, gamba roja de Dénia y pescado de la lonja de la mañana. Habla poco y cocina mucho.",
       chefSign: "Personaje de demostración",
       counterCaption: "La barra · madera de hinoki · doce asientos",
-      resEyebrow: "Reservas", resTitle: "Elige tu noche",
-      resIntro: "Dos pases, de martes a sábado. Te confirmamos la reserva por WhatsApp.",
+      resEyebrow: "Reservas", resTitle: "Reservad vuestra noche",
+      resIntro: "Dos pases, de martes a sábado. El de las 21:30 es el favorito de las parejas. Os confirmamos por WhatsApp.",
       resDay: "Día", resTime: "Pase", resGuests: "Personas", vizLabel: "Vuestros asientos en la barra",
       resBtn: "Solicitar reserva por WhatsApp", resFine: "Demo · el número de WhatsApp es de ejemplo.",
       visitEyebrow: "Visita", visitArea: "Chamberí · Madrid · Metro Bilbao o San Bernardo", directions: "Cómo llegar",
       tueSat: "Martes – sábado", sunMon: "Domingo y lunes", closed: "Cerrado", phone: "Teléfono",
       legal: "Aviso legal", privacy: "Privacidad", cookies: "Cookies",
       demo: "Restaurante ficticio · web de demostración creada por Farol · fotos de Unsplash",
+      piecesEyebrow: "Pieza a pieza", piecesHint: "Sigue bajando →",
+      p1: "El arroz · a la temperatura de la piel", p2: "El corte · un solo gesto", p3: "El pescado · de la lonja de esta mañana", p4: "El momento · se come al instante",
+      pEnd: "Dieciocho piezas.<br>Dos copas de sake.<br>Una noche.",
       guest1: "persona", guestN: "personas", seating: "pase de las",
       wa: "Hola, me gustaría reservar en Tomoshibi: {date}, pase de las {time}, {n} {g}."
     },
@@ -35,11 +38,11 @@
       introSub: "Omakase · Madrid", skip: "Enter",
       navOmakase: "Omakase", navMenu: "Menu", navChef: "Chef", navVisit: "Visit", reserve: "Book",
       heroEyebrow: "Omakase · Chamberí, Madrid",
-      heroTitle: "Twelve seats.<br>One chef.<br>A hinoki counter.",
-      heroCta: "Book an evening", heroMeta: "Tuesday to Saturday · 19:00 and 21:30",
+      heroTitle: "Low light.<br>Twelve seats.<br>A night for two.",
+      heroCta: "Book your evening", heroMeta: "Tuesday to Saturday · 19:00 and 21:30",
       omakaseEyebrow: "Omakase · お任せ",
-      statement: "Every night, the chef decides. Fish chosen that morning, rice at body temperature, and nothing more than it needs.",
-      fact1: "seats facing the counter", fact2: "pieces, at the chef's pace", fact3: "unhurried, start to finish", fact4: "per person · sake pairing €85",
+      statement: "Dinner here is slow. Candlelight, cold sake, and the chef placing each piece on your plate, one at a time, while Madrid carries on outside.",
+      fact1: "seats facing the counter", fact2: "pieces, at the chef's pace", fact3: "unhurried, just the two of you", fact4: "per person · sake pairing €85",
       menuCaption: "Counter nigiri · autumn", menuEyebrow: "Seasonal menu · Autumn", menuTitle: "The course of the evening",
       menuNote: "The menu follows the fish market. Tell us about any allergy when you book.",
       chefEyebrow: "The chef",
@@ -47,14 +50,17 @@
       chefP2: "In Madrid he works with almadraba bluefin tuna, Dénia red prawns and fish from the morning market. He talks little and cooks a lot.",
       chefSign: "Demo character",
       counterCaption: "The counter · hinoki wood · twelve seats",
-      resEyebrow: "Reservations", resTitle: "Choose your evening",
-      resIntro: "Two seatings, Tuesday to Saturday. We confirm your booking on WhatsApp.",
+      resEyebrow: "Reservations", resTitle: "Book your evening",
+      resIntro: "Two seatings, Tuesday to Saturday. The 21:30 one is the couples' favourite. We confirm on WhatsApp.",
       resDay: "Day", resTime: "Seating", resGuests: "Guests", vizLabel: "Your seats at the counter",
       resBtn: "Request a booking on WhatsApp", resFine: "Demo · the WhatsApp number is a placeholder.",
       visitEyebrow: "Visit", visitArea: "Chamberí · Madrid · Metro Bilbao or San Bernardo", directions: "Directions",
       tueSat: "Tuesday – Saturday", sunMon: "Sunday and Monday", closed: "Closed", phone: "Phone",
       legal: "Legal notice", privacy: "Privacy", cookies: "Cookies",
       demo: "Fictional restaurant · demo website by Farol · photos from Unsplash",
+      piecesEyebrow: "Piece by piece", piecesHint: "Keep scrolling →",
+      p1: "The rice · at body temperature", p2: "The cut · a single motion", p3: "The fish · from this morning's market", p4: "The moment · eaten at once",
+      pEnd: "Eighteen pieces.<br>Two glasses of sake.<br>One evening.",
       guest1: "guest", guestN: "guests", seating: "seating at",
       wa: "Hello, I'd like to book at Tomoshibi: {date}, {time} seating, {n} {g}."
     }
@@ -84,6 +90,8 @@
     });
     document.querySelectorAll(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
     renderCourses(); renderDays(); update();
+    splitText();
+    if (hasG && done) { gsap.set(".hero-title .line > span", { yPercent: 0 }); ScrollTrigger.refresh(); }
   }
   document.querySelectorAll(".lang button").forEach(function (b) {
     b.addEventListener("click", function () {
@@ -92,6 +100,38 @@
       applyLang();
     });
   });
+
+  /* ---------------- motion setup ---------------- */
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasG = !reduce && !!(window.gsap && window.ScrollTrigger);
+  var coarse = window.matchMedia && matchMedia("(pointer: coarse)").matches;
+  var lenis = null, wordsST = null;
+  function qs(s) { return document.querySelector(s); }
+  function qsa(s) { return Array.prototype.slice.call(document.querySelectorAll(s)); }
+  if (hasG) {
+    gsap.registerPlugin(ScrollTrigger);
+    document.documentElement.classList.add("gsap");
+    if (window.Lenis && !coarse) {
+      lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+      gsap.ticker.lagSmoothing(0);
+      lenis.stop();
+    }
+  }
+
+  /* split text for line / word animations (re-run after a language switch) */
+  function splitText() {
+    var h = qs(".hero-title");
+    h.innerHTML = h.innerHTML.split(/<br\s*\/?>/i).map(function (p) { return '<span class="line"><span>' + p.trim() + "</span></span>"; }).join("");
+    var st = qs(".big");
+    st.innerHTML = st.textContent.trim().split(/\s+/).map(function (w) { return '<span class="w">' + w + "</span>"; }).join(" ");
+    if (hasG) paintWords(wordsST ? wordsST.progress : 0);
+  }
+  function paintWords(p) {
+    var ws = qsa(".big .w"), n = ws.length, x = p * (n + 4);
+    ws.forEach(function (w, i) { w.style.opacity = Math.min(1, Math.max(0.13, (x - i) / 4)).toFixed(3); });
+  }
 
   /* ---------------- intro ---------------- */
   var intro = document.getElementById("intro");
@@ -106,32 +146,130 @@
     document.body.classList.remove("is-intro");
     document.body.classList.add("revealed");
     setTimeout(function () { intro.remove(); }, 1300);
+    if (lenis) lenis.start();
+    heroIn();
   }
-  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   setTimeout(endIntro, reduce ? 600 : 3700);
   intro.addEventListener("click", endIntro);
   ["keydown", "wheel", "touchmove"].forEach(function (ev) { window.addEventListener(ev, function () { if (!done) endIntro(); }, { once: true, passive: true }); });
 
-  /* ---------------- header + sticky CTA ---------------- */
-  var hdr = document.getElementById("hdr"), hero = document.querySelector(".hero"), cta = document.querySelector(".sticky-cta"), res = document.getElementById("reservas");
+  function heroIn() {
+    if (!hasG) return;
+    gsap.to(".hero-media img", { scale: 1, duration: 2.6, ease: "power2.out" });
+    gsap.to(".hero-title .line > span", { yPercent: 0, duration: 1.4, ease: "expo.out", stagger: 0.13, delay: 0.25 });
+    gsap.to([".hero .eyebrow", ".hero .link-arrow", ".hero-meta"], { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", stagger: 0.12, delay: 0.75 });
+    setTimeout(function () { ScrollTrigger.refresh(); }, 1400);
+  }
+
+  /* ---------------- header, progress line, sticky CTA ---------------- */
+  var hdr = document.getElementById("hdr"), hero = qs(".hero"), cta = qs(".sticky-cta"), res = document.getElementById("reservas"), prog = document.getElementById("progress");
+  var lastY = 0;
   function onScroll() {
     var y = window.scrollY, h = hero.offsetHeight;
     hdr.classList.toggle("solid", y > h - 90);
+    hdr.classList.toggle("hide", y > h && y > lastY + 2);
+    if (y < lastY - 2 || y < h) hdr.classList.remove("hide");
+    lastY = y;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.transform = "scaleX(" + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ")";
     var r = res.getBoundingClientRect();
-    var resVisible = r.top < window.innerHeight && r.bottom > 0;
-    cta.classList.toggle("show", y > h * 0.6 && !resVisible);
+    cta.classList.toggle("show", y > h * 0.6 && !(r.top < window.innerHeight && r.bottom > 0));
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* ---------------- reveal on scroll ---------------- */
-  var rv = document.querySelectorAll(".rv");
-  if ("IntersectionObserver" in window && !reduce) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { rootMargin: "0px 0px -8% 0px" });
-    rv.forEach(function (el) { io.observe(el); });
-  } else { rv.forEach(function (el) { el.classList.add("in"); }); }
+  /* in-page links glide (with Lenis) or smooth-scroll */
+  qsa('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var id = a.getAttribute("href"); if (id.length < 2) return;
+      var t = qs(id); if (!t) return;
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(t, { offset: -60, duration: 1.6 });
+      else t.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    });
+  });
+
+  /* ---------------- scroll choreography ---------------- */
+  function setupFX() {
+    if (!hasG) return;
+    var ST = ScrollTrigger;
+
+    // hero: start states (revealed by heroIn), parallax and fade on scroll
+    gsap.set(".hero-media img", { scale: 1.14 });
+    gsap.set(".hero-title .line > span", { yPercent: 115 });
+    gsap.set([".hero .eyebrow", ".hero .link-arrow", ".hero-meta"], { opacity: 0, y: 16 });
+    gsap.to(".hero-media", { yPercent: 16, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+    gsap.to(".hero-copy", { y: -90, opacity: 0, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom 25%", scrub: true } });
+
+    // statement: words ink in as you read down
+    wordsST = ST.create({ trigger: ".statement", start: "top 78%", end: "bottom 40%", scrub: true, onUpdate: function (s) { paintWords(s.progress); } });
+    paintWords(0);
+    gsap.from(".tategaki", { opacity: 0, y: -30, duration: 1.4, ease: "power3.out", scrollTrigger: { trigger: ".statement", start: "top 80%" } });
+
+    // facts: rise in and count up
+    gsap.from(".fact", { opacity: 0, y: 40, duration: 1.1, ease: "power3.out", stagger: 0.12, scrollTrigger: { trigger: ".facts", start: "top 85%" } });
+    qsa(".fact-num").forEach(function (el) {
+      var m = el.textContent.match(/^(\d+)(.*)$/); if (!m) return;
+      var o = { v: 0 }, target = +m[1], suffix = m[2];
+      el.textContent = "0" + suffix;
+      gsap.to(o, { v: target, duration: 1.8, ease: "power2.out", scrollTrigger: { trigger: ".facts", start: "top 85%" }, onUpdate: function () { el.textContent = Math.round(o.v) + suffix; } });
+    });
+
+    // pieces: pinned sideways gallery on larger screens
+    var mm = gsap.matchMedia();
+    mm.add("(min-width: 761px)", function () {
+      var track = qs("#piecesTrack");
+      function dist() { return Math.max(0, track.scrollWidth - window.innerWidth); }
+      qsa(".piece img").forEach(function (img) { gsap.set(img, { scale: 1.12 }); });
+      var tween = gsap.to(track, { x: function () { return -dist(); }, ease: "none",
+        scrollTrigger: { trigger: ".pieces", start: "top top", end: function () { return "+=" + dist(); }, pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 } });
+      qsa(".piece img").forEach(function (img) {
+        gsap.fromTo(img, { xPercent: -7 }, { xPercent: 7, ease: "none", scrollTrigger: { trigger: img.parentElement, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
+      });
+      qsa(".piece figcaption").forEach(function (c) {
+        gsap.from(c, { opacity: 0, y: 30, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: c.parentElement, containerAnimation: tween, start: "left 75%", toggleActions: "play none none reverse" } });
+      });
+      gsap.from(".piece-big", { opacity: 0, x: 80, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: ".piece-end", containerAnimation: tween, start: "left 85%" } });
+    });
+    mm.add("(max-width: 760px)", function () {
+      gsap.from(".piece", { opacity: 0, x: 60, duration: 1, ease: "power3.out", stagger: 0.1, scrollTrigger: { trigger: ".pieces", start: "top 75%" } });
+    });
+
+    // curtain reveals for framed photos
+    qsa(".curtain").forEach(function (fig) {
+      var img = fig.querySelector("img");
+      var tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: "top 82%" } });
+      tl.fromTo(fig, { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.6, ease: "expo.inOut" })
+        .fromTo(img, { scale: 1.3 }, { scale: 1, duration: 2.2, ease: "expo.out" }, 0.15);
+    });
+
+    // section titles, labels and text
+    qsa(".h2").forEach(function (h) {
+      gsap.from(h, { opacity: 0, y: 34, letterSpacing: "0.08em", duration: 1.4, ease: "power3.out", scrollTrigger: { trigger: h, start: "top 86%" } });
+    });
+    qsa(".eyebrow, .chef-copy p, .reserve-head .muted, .note, .light-muted").forEach(function (el) {
+      if (el.closest(".hero")) return;
+      gsap.from(el, { opacity: 0, y: 22, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" } });
+    });
+
+    // menu courses slide in one by one
+    gsap.from(".course", { opacity: 0, x: 50, duration: 1, ease: "power3.out", stagger: 0.09, scrollTrigger: { trigger: "#courses", start: "top 80%" }, clearProps: "opacity,transform" });
+
+    // the 灯 stamp presses onto the page
+    gsap.from(".stamp", { scale: 2.4, opacity: 0, rotate: -28, duration: 0.55, ease: "back.out(2.6)", scrollTrigger: { trigger: ".hanko-line", start: "top 88%" } });
+
+    // counter photo: slow zoom-out while it passes
+    gsap.fromTo(".counter-band img", { scale: 1.25, yPercent: -6 }, { scale: 1, yPercent: 6, ease: "none", scrollTrigger: { trigger: ".counter-band", start: "top bottom", end: "bottom top", scrub: true } });
+    gsap.from(".counter-caption", { opacity: 0, y: 20, duration: 1.2, scrollTrigger: { trigger: ".counter-band", start: "center 75%" } });
+
+    // booking panel and visit
+    gsap.from(".booker > *", { opacity: 0, y: 26, duration: 1, ease: "power3.out", stagger: 0.08, scrollTrigger: { trigger: ".booker", start: "top 82%" } });
+    gsap.from(".hours div", { opacity: 0, x: 30, duration: 1, ease: "power3.out", stagger: 0.08, scrollTrigger: { trigger: ".hours", start: "top 88%" } });
+    gsap.fromTo("#bigword", { xPercent: 0 }, { xPercent: -33.333, ease: "none", scrollTrigger: { trigger: ".visit", start: "top bottom", end: "bottom top", scrub: true } });
+
+    window.addEventListener("load", function () { ST.refresh(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ST.refresh(); });
+  }
 
   /* ---------------- menu ---------------- */
   function renderCourses() {
@@ -199,4 +337,5 @@
   }
 
   applyLang();
+  setupFX();
 })();

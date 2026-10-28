@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tomoshibi · Omakase en Chamberí, Madrid</title>
-<meta name="description" content="Omakase de doce asientos frente a una barra de hinoki en Chamberí, Madrid. Dos pases cada noche, de martes a sábado.">
+<title>Tomoshibi · Omakase para dos en Madrid</title>
+<meta name="description" content="Omakase a la luz de las velas en Chamberí, Madrid. Doce asientos frente a la barra, perfecto para una cita. Martes a sábado.">
 <meta property="og:title" content="Tomoshibi · Omakase en Madrid">
-<meta property="og:description" content="Doce asientos. Un chef. Dos pases cada noche.">
+<meta property="og:description" content="Luz baja. Doce asientos. Una noche para dos.">
 <meta property="og:image" content="https://images.unsplash.com/photo-1627462133149-167e7e9a91b7?auto=format&fit=crop&w=1200&q=80">
 <meta name="theme-color" content="#0c0c0b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230c0c0b'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='%23c9a46e' font-family='serif'%3E%E7%81%AF%3C/text%3E%3C/svg%3E">
@@ -33,6 +33,7 @@
 </div>
 
 <header class="hdr" id="hdr">
+  <span class="progress" id="progress" aria-hidden="true"></span>
   <a class="wordmark" href="#top" aria-label="Tomoshibi, inicio">TOMOSHIBI</a>
   <nav class="nav" aria-label="Principal">
     <a href="#omakase" data-i18n="navOmakase">Omakase</a>
@@ -58,14 +59,14 @@
     </div>
     <div class="hero-copy wrap">
       <p class="eyebrow light" data-i18n="heroEyebrow">Omakase · Chamberí, Madrid</p>
-      <h1 class="hero-title" data-i18n="heroTitle">Doce asientos.<br>Un chef.<br>Una barra de hinoki.</h1>
+      <h1 class="hero-title" data-i18n="heroTitle">Luz baja.<br>Doce asientos.<br>Una noche para dos.</h1>
       <a class="link-arrow light" href="#reservas" data-i18n="heroCta">Reservar una noche</a>
     </div>
     <p class="hero-meta wrap" data-i18n="heroMeta">Martes a sábado · 19:00 y 21:30</p>
   </section>
 
   <!-- 3 · Statement -->
-  <section class="statement wrap" id="omakase">
+  <section class="statement wrap glow" id="omakase">
     <p class="tategaki" aria-hidden="true">おまかせ</p>
     <div class="statement-body rv">
       <p class="eyebrow" data-i18n="omakaseEyebrow">Omakase · お任せ</p>
@@ -81,10 +82,30 @@
     <div class="fact rv"><span class="fact-num">165 €</span><span class="fact-label" data-i18n="fact4">por persona · maridaje de sake 85 €</span></div>
   </section>
 
+  <!-- 4b · Piece by piece (pinned horizontal gallery) -->
+  <section class="pieces" id="pieces" aria-label="Pieza a pieza">
+    <div class="pieces-pin">
+      <div class="pieces-head wrap">
+        <p class="eyebrow" data-i18n="piecesEyebrow">Pieza a pieza</p>
+        <p class="pieces-hint" aria-hidden="true" data-i18n="piecesHint">Desliza</p>
+      </div>
+      <div class="pieces-track" id="piecesTrack">
+        <figure class="piece"><img src="https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=1400&q=80" alt="Nigiri sobre pizarra negra" loading="lazy"><figcaption><span class="pn">01</span><span data-i18n="p1">El arroz · a la temperatura de la piel</span></figcaption></figure>
+        <figure class="piece"><img src="https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?auto=format&fit=crop&w=1400&q=80" alt="Nigiri y makis de cerca" loading="lazy"><figcaption><span class="pn">02</span><span data-i18n="p2">El corte · un solo gesto</span></figcaption></figure>
+        <figure class="piece"><img src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?auto=format&fit=crop&w=1400&q=80" alt="Nigiri de salmón sobre pizarra" loading="lazy"><figcaption><span class="pn">03</span><span data-i18n="p3">El pescado · de la lonja de esta mañana</span></figcaption></figure>
+        <figure class="piece"><img src="https://images.unsplash.com/photo-1607301405418-780ee5e6dd10?auto=format&fit=crop&w=1400&q=80" alt="Una pieza sujeta con palillos" loading="lazy"><figcaption><span class="pn">04</span><span data-i18n="p4">El momento · se come al instante</span></figcaption></figure>
+        <div class="piece piece-end">
+          <p class="piece-big" data-i18n="pEnd">Dieciocho piezas.<br>Una noche.</p>
+          <a class="link-arrow" href="#reservas" data-i18n="heroCta">Reservar una noche</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 5 · Seasonal menu -->
   <section class="menu" id="menu">
     <div class="wrap menu-grid">
-      <figure class="menu-photo rv">
+      <figure class="menu-photo curtain">
         <img src="https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=1200&q=80" alt="Nigiri sobre una pizarra negra con palillos" loading="lazy">
         <figcaption data-i18n="menuCaption">Nigiri de la barra · otoño</figcaption>
       </figure>
@@ -98,8 +119,8 @@
   </section>
 
   <!-- 6 · Chef -->
-  <section class="chef wrap" id="chef">
-    <figure class="chef-photo rv">
+  <section class="chef wrap glow" id="chef">
+    <figure class="chef-photo curtain">
       <img src="https://images.unsplash.com/photo-1512132411229-c30391241dd8?auto=format&fit=crop&w=1400&q=80" alt="La mano del chef colocando una pieza en el plato" loading="lazy">
     </figure>
     <div class="chef-copy rv">
@@ -107,7 +128,7 @@
       <h2 class="h2">Haruki Sato</h2>
       <p data-i18n="chefP1">Diez años detrás de una barra en Tokio le enseñaron que el sushi se decide en segundos: la temperatura del arroz, el corte, el momento de servir.</p>
       <p data-i18n="chefP2">En Madrid trabaja con atún rojo de almadraba, gamba roja de Dénia y pescado de la lonja de la mañana. Habla poco y cocina mucho.</p>
-      <p class="hanko-line"><span class="hanko" aria-hidden="true">灯</span><span data-i18n="chefSign">Personaje de demostración</span></p>
+      <p class="hanko-line"><span class="hanko stamp" aria-hidden="true">灯</span><span data-i18n="chefSign">Personaje de demostración</span></p>
     </div>
   </section>
 
@@ -118,7 +139,7 @@
   </section>
 
   <!-- 8 · Reservations -->
-  <section class="reserve wrap" id="reservas">
+  <section class="reserve wrap glow" id="reservas">
     <div class="reserve-head rv">
       <p class="eyebrow" data-i18n="resEyebrow">Reservas</p>
       <h2 class="h2" data-i18n="resTitle">Elige tu noche</h2>
@@ -174,6 +195,7 @@
         <div><dt>Instagram</dt><dd>@tomoshibi.madrid</dd></div>
       </dl>
     </div>
+    <div class="bigword" aria-hidden="true"><span id="bigword">TOMOSHIBI · 灯 · TOMOSHIBI · 灯 · TOMOSHIBI · 灯 · </span></div>
   </section>
 </main>
 
@@ -186,6 +208,9 @@
 
 <a class="sticky-cta" href="#reservas" data-i18n="reserve">Reservar</a>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="main.js"></script>
 </body>
 </html>
