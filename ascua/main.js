@@ -169,11 +169,11 @@
   var DON = [
     { t: 46, core: "#7c1a2b", pink: "#9e2638", band: .03, pinkBand: .07,
       es: { n: "Azul", d: "Sellado por fuera y casi frío por dentro. Para puristas." }, en: { n: "Blue", d: "Seared outside, almost cold inside. For purists." } },
-    { t: 52, core: "#a52436", pink: "#c2454f", band: .075, pinkBand: .12,
+    { t: 52, core: "#a52436", pink: "#c2454f", band: .055, pinkBand: .13,
       es: { n: "Poco hecho", d: "Centro rojo y tibio; la grasa empieza a fundirse. Así sale el chuletón de la casa." }, en: { n: "Rare", d: "A warm red centre with the fat just starting to melt. How the house rib steak leaves the grill." } },
-    { t: 57, core: "#c9535c", pink: "#cf7673", band: .14, pinkBand: .19,
+    { t: 57, core: "#c9535c", pink: "#cf7673", band: .095, pinkBand: .25,
       es: { n: "Al punto", d: "Rosado y jugoso de lado a lado. El favorito para el solomillo." }, en: { n: "Medium rare", d: "Pink and juicy from edge to edge. Our favourite for the fillet." } },
-    { t: 63, core: "#b98478", pink: "#a97f72", band: .26, pinkBand: .17,
+    { t: 63, core: "#b98478", pink: "#a97f72", band: .2, pinkBand: .2,
       es: { n: "Hecho", d: "Apenas un hilo rosado en el centro. Más firme y menos jugoso." }, en: { n: "Medium well", d: "Just a thread of pink in the centre. Firmer and less juicy." } },
     { t: 70, core: "#8c6d5d", pink: "#8a6b5d", band: .4, pinkBand: .05,
       es: { n: "Muy hecho", d: "Cocinado por completo. Te lo preparamos, aunque te sugeriremos otro corte." }, en: { n: "Well done", d: "Cooked all the way through. We'll make it, though we may suggest another cut." } }
@@ -302,12 +302,22 @@
       var x = p.x + Math.sin(p.ph + p.life * p.fq) * p.sway;
       var a = Math.sin(Math.PI * k) * (0.6 + 0.4 * Math.sin(p.life * p.fl + p.ph)) * clamp(p.y / (h * 0.45), 0, 1) * (this.o.alpha || 1);
       if (a <= 0.01) continue;
-      ctx.fillStyle = "rgba(255," + (80 + Math.round(60 * p.z)) + ",24," + (a * 0.2).toFixed(3) + ")";
-      ctx.beginPath(); ctx.arc(x, p.y, p.r * 4.2, 0, 6.283); ctx.fill();
-      ctx.fillStyle = "rgba(255," + (168 + Math.round(64 * p.z)) + "," + (110 + Math.round(60 * p.z)) + "," + a.toFixed(3) + ")";
-      ctx.beginPath(); ctx.arc(x, p.y, p.r, 0, 6.283); ctx.fill();
+      var s = p.r * 10;
+      ctx.globalAlpha = Math.min(1, a * 0.6);
+      ctx.drawImage(GLOW, x - s / 2, p.y - s / 2, s, s);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "rgba(255," + (176 + Math.round(60 * p.z)) + "," + (118 + Math.round(60 * p.z)) + "," + a.toFixed(3) + ")";
+      ctx.beginPath(); ctx.arc(x, p.y, p.r * 0.85, 0, 6.283); ctx.fill();
     }
   };
+  // soft glow sprite, drawn once and reused for every spark
+  var GLOW = (function () {
+    var c = document.createElement("canvas"); c.width = c.height = 64;
+    var g = c.getContext("2d"), rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    rg.addColorStop(0, "rgba(255,176,100,1)"); rg.addColorStop(0.22, "rgba(255,120,44,.5)"); rg.addColorStop(1, "rgba(255,80,20,0)");
+    g.fillStyle = rg; g.fillRect(0, 0, 64, 64);
+    return c;
+  })();
   Embers.prototype.start = function () {
     if (this.on || reduce) return; this.on = true; this.last = 0;
     var self = this;
