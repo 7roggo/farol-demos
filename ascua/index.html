@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ascua · Asador en Madrid</title>
+<meta name="description" content="Asador en el barrio de Salamanca, Madrid. Vaca vieja gallega madurada 45 días en cámara propia y brasa de encina. Reserva tu mesa.">
+<meta property="og:title" content="Ascua · Asador en Madrid">
+<meta property="og:description" content="Fuego de encina. Carne con tiempo.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1558030089-02acba3c214e?auto=format&fit=crop&w=1200&q=80">
+<meta name="theme-color" content="#0b0908">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0908'/%3E%3Cg fill='none' stroke='%23e2723b' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 43 32 13l13 30'/%3E%3Cpath d='M24 32h16'/%3E%3Cpath d='M14 51q18 8 36 0'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Instrument+Sans:wght@400..600&display=swap">
+<link rel="stylesheet" href="styles.css?v=1">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","name":"Ascua","servesCuisine":["Steakhouse","Spanish","Grill"],"priceRange":"€€€€","address":{"@type":"PostalAddress","streetAddress":"Calle de Lagasca 58","addressLocality":"Madrid","addressCountry":"ES"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"13:30","closes":"00:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Sunday"],"opens":"13:30","closes":"16:30"}]}
+</script>
+</head>
+<body class="is-intro">
+
+<!-- Intro: the name heats up like an ember, then cools -->
+<div id="intro" aria-hidden="true">
+  <canvas class="intro-embers" id="introEmbers"></canvas>
+  <div class="intro-inner">
+    <svg class="brand intro-brand" viewBox="0 0 64 64"><path d="M19 43 32 13l13 30"/><path d="M24 32h16"/><path d="M14 51q18 8 36 0"/></svg>
+    <span class="intro-name" id="introName">ASCUA</span>
+    <span class="intro-sub" data-i18n="introSub">Asador · Madrid</span>
+  </div>
+  <button class="intro-skip" type="button" tabindex="-1" data-i18n="skip">Entrar</button>
+</div>
+
+<header class="hdr" id="hdr">
+  <span class="progress" id="progress" aria-hidden="true"></span>
+  <a class="wordmark" href="#top" aria-label="Ascua">
+    <svg class="brand" viewBox="0 0 64 64" aria-hidden="true"><path d="M19 43 32 13l13 30"/><path d="M24 32h16"/><path d="M14 51q18 8 36 0"/></svg>
+    <span>ASCUA</span>
+  </a>
+  <nav class="nav" aria-label="Principal">
+    <a href="#camara" data-i18n="navCamara">La cámara</a>
+    <a href="#carta" data-i18n="navCarta">Carta</a>
+    <a href="#fuego" data-i18n="navFuego">El fuego</a>
+    <a href="#bodega" data-i18n="navBodega">Bodega</a>
+    <a href="#visita" data-i18n="navVisita">Visita</a>
+  </nav>
+  <div class="hdr-right">
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="hdr-cta" href="#reservas" data-i18n="reserve">Reservar</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="sheet"><i></i><i></i><span class="sr" data-i18n="menu">Menú</span></button>
+  </div>
+</header>
+
+<div class="sheet" id="sheet" hidden>
+  <nav class="sheet-nav" aria-label="Menú">
+    <a href="#camara" data-i18n="navCamara">La cámara</a>
+    <a href="#carta" data-i18n="navCarta">Carta</a>
+    <a href="#punto" data-i18n="navPunto">El punto</a>
+    <a href="#fuego" data-i18n="navFuego">El fuego</a>
+    <a href="#bodega" data-i18n="navBodega">Bodega</a>
+    <a href="#visita" data-i18n="navVisita">Visita</a>
+  </nav>
+  <a class="btn btn-ember" href="#reservas" data-i18n="heroCta">Reservar mesa</a>
+  <p class="sheet-meta">Calle de Lagasca 58 · Madrid</p>
+</div>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Ascua">
+    <div class="hero-media">
+      <picture>
+        <source media="(max-width: 760px)" srcset="https://images.unsplash.com/photo-1614119068601-483274e9dcb7?auto=format&fit=crop&w=1100&h=1700&q=80">
+        <img src="https://images.unsplash.com/photo-1558030089-02acba3c214e?auto=format&fit=crop&w=2400&q=80" alt="Un chuletón con hueso sobre la brasa, sujeto con pinzas entre las llamas" fetchpriority="high">
+      </picture>
+    </div>
+    <canvas class="hero-embers" id="heroEmbers" aria-hidden="true"></canvas>
+    <div class="hero-copy wrap">
+      <p class="eyebrow" data-i18n="heroEyebrow">Asador · Barrio de Salamanca, Madrid</p>
+      <h1 class="hero-title" data-i18n="heroTitle">Fuego de encina.<br>Carne con <em>tiempo</em>.</h1>
+      <div class="hero-ctas">
+        <a class="btn btn-ember" href="#reservas" data-i18n="heroCta">Reservar mesa</a>
+        <a class="link-line" href="#carta" data-i18n="heroCta2">Ver la carta</a>
+      </div>
+    </div>
+    <div class="hero-foot wrap">
+      <span data-i18n="heroMeta">Martes a domingo · comidas y cenas</span>
+      <span class="scroll-cue" aria-hidden="true"><i></i><span data-i18n="scroll">Desliza</span></span>
+    </div>
+  </section>
+
+  <!-- The house -->
+  <section class="statement wrap" id="casa">
+    <p class="eyebrow" data-i18n="houseEyebrow">La casa</p>
+    <p class="big" id="big" data-i18n="statement">Colgamos la vaca vieja cuarenta y cinco días en nuestra cámara, encendemos la encina a mediodía y cortamos cada pieza en la mesa, delante de ti. Nada más.</p>
+  </section>
+
+  <section class="facts wrap" aria-label="Ascua en cifras">
+    <div class="fact"><p class="fact-num"><span data-count="45">45</span></p><p class="fact-label" data-i18n="fact1">días de maduración en cámara propia</p></div>
+    <div class="fact"><p class="fact-num"><span data-count="400">400</span><small>°C</small></p><p class="fact-label" data-i18n="fact2">brasa de encina extremeña</p></div>
+    <div class="fact"><p class="fact-num"><span data-count="8">8</span><small>+</small></p><p class="fact-label" data-i18n="fact3">años de vida de cada vaca gallega</p></div>
+    <div class="fact"><p class="fact-num"><span data-count="1200">1.200</span></p><p class="fact-label" data-i18n="fact4">vinos en la bodega</p></div>
+  </section>
+
+  <!-- The ageing room: pinned day counter on desktop -->
+  <section class="camara" id="camara">
+    <div class="cam-pin wrap">
+      <div class="cam-left">
+        <p class="eyebrow" data-i18n="camEyebrow">La cámara</p>
+        <h2 class="h2" data-i18n="camTitle">Cuarenta y cinco días<br>de silencio.</h2>
+        <div class="cam-counter" aria-hidden="true">
+          <span class="cam-day" id="camDay">01</span>
+          <span class="cam-unit" data-i18n="camUnit">días<br>en cámara</span>
+        </div>
+        <div class="cam-track" aria-hidden="true">
+          <span class="cam-fill" id="camFill"></span>
+          <i style="left:0%"><b>1</b></i><i style="left:33.9%"><b>21</b></i><i style="left:74.6%"><b>45</b></i><i style="left:100%"><b>60</b></i>
+        </div>
+        <div class="cam-stages" id="camStages">
+          <article class="stage is-on">
+            <figure class="stage-img"><img src="https://images.unsplash.com/photo-1728042359930-c0145f0fd442?auto=format&fit=crop&w=1000&q=78" alt="Lomo de vaca crudo con su veta de grasa" loading="lazy"></figure>
+            <p class="stage-k" data-i18n="s1k">Día 1</p>
+            <h3 class="stage-t" data-i18n="s1t">Entra la pieza</h3>
+            <p class="stage-p" data-i18n="s1p">Lomo entero de vaca gallega de más de ocho años, con hueso y su grasa amarilla de pasto. Lo colgamos tal cual llega del ganadero.</p>
+          </article>
+          <article class="stage">
+            <figure class="stage-img"><img src="https://images.unsplash.com/photo-1606677661991-446cea8ee182?auto=format&fit=crop&w=1000&q=78" alt="Piezas de vaca con hueso colgadas en la cámara" loading="lazy"></figure>
+            <p class="stage-k" data-i18n="s2k">Día 21</p>
+            <h3 class="stage-t" data-i18n="s2t">La fibra se relaja</h3>
+            <p class="stage-p" data-i18n="s2p">A 1,5 °C y con el aire siempre en movimiento, las enzimas de la propia carne rompen el tejido. Empieza a ganar ternura.</p>
+          </article>
+          <article class="stage">
+            <figure class="stage-img"><img src="https://images.unsplash.com/photo-1767554261707-db55a5cbdd76?auto=format&fit=crop&w=1000&q=78" alt="Estantes de la cámara de maduración bajo luz roja" loading="lazy"></figure>
+            <p class="stage-k" data-i18n="s3k">Día 45</p>
+            <h3 class="stage-t" data-i18n="s3t">Nuestro punto</h3>
+            <p class="stage-p" data-i18n="s3p">Ha perdido casi una cuarta parte de su peso en agua. El sabor se concentra en notas de mantequilla y nuez tostada. Es el chuletón de la casa.</p>
+          </article>
+          <article class="stage">
+            <figure class="stage-img"><img src="https://images.unsplash.com/photo-1529694157872-4e0c0f3b238b?auto=format&fit=crop&w=1000&q=78" alt="Un chuletón poco hecho cortado en la tabla" loading="lazy"></figure>
+            <p class="stage-k" data-i18n="s4k">Día 60</p>
+            <h3 class="stage-t" data-i18n="s4t">Para quien lo pide</h3>
+            <p class="stage-p" data-i18n="s4p">Corteza oscura y un aroma que recuerda al queso curado. Salen pocas piezas al mes: pídela al reservar.</p>
+          </article>
+        </div>
+        <dl class="cam-readout">
+          <div><dt data-i18n="rTemp">Temperatura</dt><dd>1,5 °C</dd></div>
+          <div><dt data-i18n="rHum">Humedad</dt><dd>82 %</dd></div>
+          <div><dt data-i18n="rLoss">Merma</dt><dd id="camLoss">22 %</dd></div>
+        </dl>
+      </div>
+      <div class="cam-right" aria-hidden="true">
+        <div class="cam-frame" id="camFrame">
+          <img src="https://images.unsplash.com/photo-1728042359930-c0145f0fd442?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1606677661991-446cea8ee182?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1767554261707-db55a5cbdd76?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1529694157872-4e0c0f3b238b?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy">
+          <span class="cam-tag" id="camTag">Día 1</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section class="carta" id="carta">
+    <div class="wrap">
+      <div class="carta-head">
+        <div>
+          <p class="eyebrow" data-i18n="cartaEyebrow">La carta</p>
+          <h2 class="h2" data-i18n="cartaTitle">Al peso,<br>cortado en sala.</h2>
+        </div>
+        <p class="muted" data-i18n="cartaIntro">Te enseñamos la pieza antes de que toque la brasa. Todas las carnes llegan con sal en escamas y pimientos asados a la leña.</p>
+      </div>
+      <div class="tabs" role="tablist" id="tabs" aria-label="Carta">
+        <span class="tab-ind" aria-hidden="true"></span>
+        <button type="button" role="tab" id="tab-cuts" aria-controls="pane-cuts" aria-selected="true" data-i18n="tabCuts">Carnes</button>
+        <button type="button" role="tab" id="tab-start" aria-controls="pane-start" aria-selected="false" tabindex="-1" data-i18n="tabStart">Para empezar</button>
+        <button type="button" role="tab" id="tab-sides" aria-controls="pane-sides" aria-selected="false" tabindex="-1" data-i18n="tabSides">Guarniciones</button>
+        <button type="button" role="tab" id="tab-sweet" aria-controls="pane-sweet" aria-selected="false" tabindex="-1" data-i18n="tabSweet">Postres</button>
+      </div>
+      <div class="pane" id="pane-cuts" role="tabpanel" aria-labelledby="tab-cuts"><ul class="cuts" id="cuts"></ul></div>
+      <div class="pane" id="pane-start" role="tabpanel" aria-labelledby="tab-start" hidden><ul class="dishes" id="dStart"></ul></div>
+      <div class="pane" id="pane-sides" role="tabpanel" aria-labelledby="tab-sides" hidden><ul class="dishes" id="dSides"></ul></div>
+      <div class="pane" id="pane-sweet" role="tabpanel" aria-labelledby="tab-sweet" hidden><ul class="dishes" id="dSweet"></ul></div>
+      <p class="note" data-i18n="cartaNote">Precios con IVA incluido. Consulta los alérgenos con el equipo de sala.</p>
+    </div>
+    <div class="carta-float" id="cartaFloat" aria-hidden="true"></div>
+  </section>
+
+  <!-- Doneness -->
+  <section class="punto" id="punto">
+    <div class="wrap punto-grid">
+      <div class="don-visual">
+        <svg class="slice" viewBox="0 0 640 300" aria-hidden="true">
+          <defs>
+            <linearGradient id="donGrad" gradientUnits="userSpaceOnUse" x1="0" y1="46" x2="0" y2="254">
+              <stop offset="0" stop-color="#140804"/><stop offset=".06" stop-color="#3a1a0e"/><stop offset=".085" stop-color="#86675a"/><stop offset=".16" stop-color="#86675a"/><stop offset=".28" stop-color="#c2454f"/><stop offset=".5" stop-color="#a52436"/><stop offset=".72" stop-color="#c2454f"/><stop offset=".84" stop-color="#86675a"/><stop offset=".915" stop-color="#86675a"/><stop offset=".94" stop-color="#3a1a0e"/><stop offset="1" stop-color="#140804"/>
+            </linearGradient>
+            <linearGradient id="fatGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7a4a22"/><stop offset=".35" stop-color="#cfae7c"/><stop offset="1" stop-color="#e6d2ae"/></linearGradient>
+            <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".09"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset=".75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient>
+            <radialGradient id="donGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#e2723b" stop-opacity=".26"/><stop offset="1" stop-color="#e2723b" stop-opacity="0"/></radialGradient>
+            <clipPath id="sliceClip"><path id="slicePath" d="M58 96C62 62 104 48 178 50C262 53 336 44 424 46C522 48 588 60 598 108C604 138 602 176 596 202C586 242 538 252 466 250C378 247 300 256 204 252C116 249 62 238 54 202C48 172 54 128 58 96Z"/></clipPath>
+            <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.05 0.12" numOctaves="3" seed="4"/><feColorMatrix type="matrix" values="0 0 0 0 .08  0 0 0 0 .02  0 0 0 0 .02  2.2 0 0 0 -1.05"/></filter>
+            <filter id="marb" x="0" y="0" width="100%" height="100%"><feTurbulence type="turbulence" baseFrequency="0.024 0.05" numOctaves="3" seed="9"/><feColorMatrix type="matrix" values="0 0 0 0 .96  0 0 0 0 .9  0 0 0 0 .82  -20 0 0 0 1.9"/><feGaussianBlur stdDeviation=".5"/></filter>
+          </defs>
+          <ellipse cx="320" cy="152" rx="320" ry="146" fill="url(#donGlow)" id="donGlowEl"/>
+          <ellipse cx="326" cy="276" rx="250" ry="10" fill="#000" opacity=".55"/>
+          <g clip-path="url(#sliceClip)">
+            <rect width="640" height="300" fill="url(#donGrad)"/>
+            <rect width="640" height="300" filter="url(#grain)" opacity=".32"/>
+            <rect width="640" height="300" filter="url(#marb)" opacity=".5"/>
+            <path d="M58 96C62 62 104 48 178 50L150 51C104 70 80 108 80 150C80 192 100 230 168 251C112 248 62 238 54 202C48 172 54 128 58 96Z" fill="url(#fatGrad)"/>
+            <rect width="640" height="300" fill="url(#sheen)"/>
+          </g>
+          <use href="#slicePath" fill="none" stroke="#170a05" stroke-width="8"/>
+          <use href="#slicePath" fill="none" stroke="#ffb27a" stroke-opacity=".1" stroke-width="1.5"/>
+        </svg>
+        <div class="don-read">
+          <span class="don-temp" id="donTemp">52</span><span class="don-deg">°C</span>
+          <span class="don-lbl" data-i18n="donCore">Temperatura en el centro</span>
+        </div>
+      </div>
+      <div class="don-copy">
+        <p class="eyebrow" data-i18n="donEyebrow">El punto</p>
+        <h2 class="h2" data-i18n="donTitle">¿Cómo lo quieres?</h2>
+        <p class="muted" data-i18n="donIntro">Desliza para ver cómo cambia el corte. Nuestro asador lo saca de la brasa unos grados antes; el reposo hace el resto.</p>
+        <div class="don-now" aria-live="polite">
+          <h3 class="don-name" id="donName">Poco hecho</h3>
+          <span class="don-badge" id="donBadge" data-i18n="donBadge">Recomendado para el chuletón</span>
+          <p class="don-desc" id="donDesc">Centro rojo y tibio; la grasa empieza a fundirse.</p>
+        </div>
+        <div class="don-ctrl">
+          <input type="range" id="donRange" min="0" max="4" step="0.01" value="1" aria-label="Punto de la carne">
+          <div class="don-stops" id="donStops"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fire + grill master -->
+  <section class="fuego" id="fuego">
+    <div class="fire-band">
+      <img src="https://images.unsplash.com/photo-1762202742459-4fcdc4beaab4?auto=format&fit=crop&w=2400&q=80" alt="Brasas de encina encendidas" loading="lazy">
+      <div class="fire-copy wrap">
+        <p class="eyebrow" data-i18n="fireEyebrow">El fuego</p>
+        <p class="fire-num"><span id="fireNum">400</span><span class="fire-unit">°C</span></p>
+        <p class="fire-line" data-i18n="fireLine">Encina de Extremadura, encendida cada día desde las doce.</p>
+      </div>
+    </div>
+    <div class="asador wrap">
+      <figure class="asador-photo curtain">
+        <img src="https://images.unsplash.com/photo-1670819916552-67698b1c86ae?auto=format&fit=crop&w=1300&q=80" alt="El asador trabajando entre las llamas" loading="lazy">
+      </figure>
+      <div class="asador-copy">
+        <p class="eyebrow" data-i18n="chefEyebrow">El asador</p>
+        <h2 class="h2">Marcos Varela</h2>
+        <p data-i18n="chefP1">Veinte años frente a la brasa, de los asadores de Getaria a las parrillas de Buenos Aires. Trabaja sin termómetro: mira el color de la grasa y escucha la carne.</p>
+        <p data-i18n="chefP2">Cada mañana elige en la cámara las piezas del día y decide cuánta brasa necesita cada una.</p>
+        <p class="sign"><svg class="brand stamp" viewBox="0 0 64 64" aria-hidden="true"><path d="M19 43 32 13l13 30"/><path d="M24 32h16"/><path d="M14 51q18 8 36 0"/></svg><span data-i18n="chefSign">Personaje de demostración</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cellar -->
+  <section class="bodega" id="bodega">
+    <div class="wrap bodega-grid">
+      <figure class="bodega-photo curtain">
+        <img src="https://images.unsplash.com/photo-1724882207681-9e7e8c3dd45c?auto=format&fit=crop&w=1600&q=80" alt="Pasillo de la bodega con botellas a ambos lados" loading="lazy">
+      </figure>
+      <div class="bodega-copy">
+        <p class="eyebrow" data-i18n="cellarEyebrow">La bodega</p>
+        <h2 class="h2" data-i18n="cellarTitle">1.200 vinos bajo<br>la calle Lagasca.</h2>
+        <p class="muted" data-i18n="cellarP">Grandes tintos de Ribera del Duero y Rioja, garnachas viejas del Priorat y una selección corta de Borgoña. Nuestra sumiller propone una copa para cada corte.</p>
+        <dl class="pairs" id="pairs"></dl>
+        <p class="note" data-i18n="cellarNote">Más de 40 vinos por copa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dining room -->
+  <section class="sala" aria-label="La sala">
+    <img src="https://images.unsplash.com/photo-1552960226-639240203497?auto=format&fit=crop&w=2400&q=80" alt="La sala con lámparas cálidas y mesas vestidas" loading="lazy">
+    <p class="sala-caption wrap" data-i18n="salaCaption">La sala · 64 cubiertos · luz baja y manteles de lino</p>
+  </section>
+
+  <!-- Reservations -->
+  <section class="reserve" id="reservas">
+    <div class="wrap reserve-grid">
+      <div class="reserve-head">
+        <p class="eyebrow" data-i18n="resEyebrow">Reservas</p>
+        <h2 class="h2" data-i18n="resTitle">Reserva tu mesa</h2>
+        <p class="muted" data-i18n="resIntro">Elige día, hora y personas. Te confirmamos por WhatsApp en menos de una hora.</p>
+        <ul class="policy">
+          <li><span data-i18n="pol1k">Duración de la mesa</span><span data-i18n="pol1v">2 h 30 min</span></li>
+          <li><span data-i18n="pol2k">Cancelación</span><span data-i18n="pol2v">Gratis hasta 24 h antes</span></li>
+          <li><span data-i18n="pol3k">Código de vestimenta</span><span data-i18n="pol3v">Elegante informal</span></li>
+        </ul>
+        <div class="private">
+          <img src="https://images.unsplash.com/photo-1761138785048-9dae4abb0a0c?auto=format&fit=crop&w=600&h=760&q=75" alt="" loading="lazy">
+          <div>
+            <p class="private-k" data-i18n="privK">El reservado</p>
+            <p data-i18n="privV">Hasta 14 personas, con parrilla propia a la vista y un menú de cortes para compartir.</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="booker" id="booker" novalidate>
+        <fieldset class="step">
+          <legend data-i18n="resDay">Día</legend>
+          <div class="days" id="days" role="radiogroup"></div>
+        </fieldset>
+        <fieldset class="step">
+          <legend data-i18n="resService">Servicio</legend>
+          <div class="seg" id="service" role="radiogroup">
+            <span class="seg-ind" aria-hidden="true"></span>
+            <label class="opt"><input type="radio" name="service" value="lunch"><span data-i18n="lunch">Comida</span></label>
+            <label class="opt"><input type="radio" name="service" value="dinner" checked><span data-i18n="dinner">Cena</span></label>
+          </div>
+          <p class="hint" id="serviceHint"></p>
+        </fieldset>
+        <fieldset class="step">
+          <legend data-i18n="resTime">Hora</legend>
+          <div class="times" id="times" role="radiogroup"></div>
+        </fieldset>
+        <fieldset class="step">
+          <legend data-i18n="resGuests">Personas</legend>
+          <div class="guests-row">
+            <div class="stepper">
+              <button type="button" class="step-btn" id="minus" aria-label="−1"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10"/></svg></button>
+              <output class="count" id="guests" aria-live="polite">2</output>
+              <button type="button" class="step-btn" id="plus" aria-label="+1"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M10 5v10"/></svg></button>
+            </div>
+            <p class="hint" id="guestHint"></p>
+          </div>
+        </fieldset>
+        <fieldset class="step">
+          <legend data-i18n="resOcc">Ocasión · opcional</legend>
+          <div class="chips" id="occ"></div>
+        </fieldset>
+        <label class="toggle" for="chu60">
+          <input type="checkbox" id="chu60">
+          <span class="sw" aria-hidden="true"></span>
+          <span class="toggle-txt"><b data-i18n="chuK">Reservar un chuletón de 60 días</b><small id="chuLeft"></small></span>
+        </label>
+        <div class="summary" aria-live="polite">
+          <p class="sum-k" data-i18n="sumK">Tu reserva</p>
+          <p class="sum-date" id="sDate"></p>
+          <p class="sum-meta" id="sMeta"></p>
+          <p class="sum-extra" id="sExtra"></p>
+        </div>
+        <a class="btn btn-ember btn-wa" id="waBtn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.2-.2-.4-.3Z"/></svg>
+          <span data-i18n="resBtn">Reservar por WhatsApp</span>
+        </a>
+        <p class="fine" data-i18n="resFine">Demo · el número de WhatsApp es de ejemplo.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Visit -->
+  <section class="visit" id="visita">
+    <div class="wrap visit-grid">
+      <div>
+        <p class="eyebrow" data-i18n="visitEyebrow">Visita</p>
+        <h2 class="h2">Calle de Lagasca 58</h2>
+        <p class="muted" data-i18n="visitArea">Barrio de Salamanca · Madrid · Metro Serrano o Velázquez</p>
+        <a class="link-line" href="https://www.google.com/maps/search/?api=1&query=Calle+de+Lagasca+58+Madrid" target="_blank" rel="noopener" data-i18n="directions">Cómo llegar</a>
+      </div>
+      <dl class="hours">
+        <div><dt data-i18n="tueSat">Martes – sábado</dt><dd>13:30–16:00 · 20:30–00:00</dd></div>
+        <div><dt data-i18n="sun">Domingo</dt><dd>13:30–16:30</dd></div>
+        <div><dt data-i18n="mon">Lunes</dt><dd data-i18n="closed">Cerrado</dd></div>
+        <div><dt data-i18n="phone">Teléfono</dt><dd>+34 910 000 000</dd></div>
+        <div><dt>Instagram</dt><dd>@ascua.madrid</dd></div>
+      </dl>
+    </div>
+    <p class="bigword" aria-hidden="true"><span id="bigword">ASCUA</span></p>
+  </section>
+</main>
+
+<footer class="ftr wrap">
+  <a class="wordmark small" href="#top" aria-label="Ascua">
+    <svg class="brand" viewBox="0 0 64 64" aria-hidden="true"><path d="M19 43 32 13l13 30"/><path d="M24 32h16"/><path d="M14 51q18 8 36 0"/></svg>
+    <span>ASCUA</span>
+  </a>
+  <p class="ftr-links"><a href="#" data-i18n="legal">Aviso legal</a> · <a href="#" data-i18n="privacy">Privacidad</a> · <a href="#" data-i18n="cookies">Cookies</a></p>
+  <p class="ftr-demo" data-i18n="demo">Restaurante ficticio · web de demostración creada por Farol · fotos de Unsplash</p>
+</footer>
+
+<a class="sticky-cta" href="#reservas" data-i18n="heroCta">Reservar mesa</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="main.js?v=1"></script>
+</body>
+</html>
