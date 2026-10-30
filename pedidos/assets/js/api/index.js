@@ -6,8 +6,8 @@ let instance = null;
 export function getApi() {
   if (instance) return instance;
   const cfg = window.FAROL_CONFIG || {};
-  const forceDemo = new URLSearchParams(location.search).has('demo');
-  instance = !forceDemo && cfg.supabaseUrl && cfg.supabaseAnonKey ? createSupabaseApi(cfg) : createDemoApi();
+  // A configured site always runs live; the demo only runs when no backend is set.
+  instance = cfg.supabaseUrl && cfg.supabaseAnonKey ? createSupabaseApi(cfg) : createDemoApi();
   return instance;
 }
 

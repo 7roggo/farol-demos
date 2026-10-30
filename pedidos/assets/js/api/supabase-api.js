@@ -84,10 +84,21 @@ export function createSupabaseApi(cfg) {
       if (error) throw toError(error);
       return sb.storage.from('menu-images').getPublicUrl(path).data.publicUrl;
     },
+    // Uses the "translate" function when it's deployed (DeepL if a key is set); otherwise the free MyMemory service.
     async translate(texts, from = 'es', to = 'en') {
-      const { data, error } = await sb.functions.invoke('translate', { body: { texts, from, to } });
-      if (error || data?.error) throw toError(error || { message: data.error });
-      return data.texts;
+      try {
+        const { data, error } = await sb.functions.invoke('translate', { body: { texts, from, to } });
+        if (!error && !data?.error && Array.isArray(data?.texts)) return data.texts;
+      } catch { /* not deployed: fall back below */ }
+      const out = [];
+      for (const t of texts) {
+        if (!String(t).trim()) { out.push(t); continue; }
+        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(t)}&langpair=${from}|${to}`);
+        if (!res.ok) throw toError({ message: 'translation_failed' });
+        const d = await res.json();
+        out.push(d?.responseData?.translatedText || t);
+      }
+      return out;
     },
 
     // ---------- tables ----------

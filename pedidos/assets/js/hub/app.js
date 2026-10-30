@@ -31,7 +31,7 @@ export function ThemeButton({ theme, setTheme, t }) {
     <${Icon} name=${theme === 'dark' ? 'sun' : 'moon'} /></button>`;
 }
 
-function Login({ api, t, lang, setLang, recovery }) {
+export function Login({ api, t, lang, setLang, recovery, title, tag }) {
   const [mode, setMode] = useState(recovery ? 'recovery' : 'login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,8 +49,8 @@ function Login({ api, t, lang, setLang, recovery }) {
   };
   return html`<div class="h-login">
     <form class="h-login-card" onSubmit=${submit}>
-      <div class="h-login-brand"><${Mark} size=${30} /><span class="h-wordmark">Farol</span></div>
-      <h1>${mode === 'recovery' ? t.newPassword : t.loginTitle}</h1>
+      <div class="h-login-brand"><${Mark} size=${30} /><span class="h-wordmark">Farol</span>${tag && html`<span class="h-tag">${tag}</span>`}</div>
+      <h1>${mode === 'recovery' ? t.newPassword : mode === 'signup' ? t.createAccount : title || t.loginTitle}</h1>
       ${api.mode === 'demo' && html`<p class="h-note">${t.demoLogin}</p>`}
       ${mode !== 'recovery' && html`<${Field} label=${t.email}><input class="h-input" type="email" required autocomplete="email" value=${email} onInput=${(e) => setEmail(e.target.value)} /></${Field}>`}
       ${mode !== 'reset' && html`<${Field} label=${mode === 'recovery' ? t.newPassword : t.password}>

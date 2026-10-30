@@ -4,27 +4,12 @@ import { money, slugify } from '../core/util.js';
 import { Field, Switch, Toasts, ConfirmHost, toast, attempt } from '../hub/ui.js';
 import { siteBase } from '../api/index.js';
 import { Mark, Icon } from '../hub/icons.js';
-import { ThemeButton } from '../hub/app.js';
+import { ThemeButton, Login } from '../hub/app.js';
+import { HS } from '../hub/strings.js';
 import { store } from '../core/util.js';
 
 const msg = (e) => ({ not_allowed: 'This account is not a Farol admin.', duplicate_slug: 'That web address is already taken.' }[e.code]
   || (/duplicate key|unique/i.test(e.message) ? 'That web address is already taken.' : e.message || 'Something went wrong.'));
-
-function Login({ api }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [err, setErr] = useState('');
-  return html`<div class="h-login"><form class="h-login-card" onSubmit=${async (e) => {
-    e.preventDefault(); setErr('');
-    try { await api.signIn(email.trim(), password); } catch (x) { setErr(msg(x)); }
-  }}>
-    <div class="h-login-brand"><${Mark} size=${30} /><span class="h-wordmark">Farol</span><span class="h-tag">admin</span></div>
-    <${Field} label="E-mail"><input class="h-input" type="email" required value=${email} onInput=${(e) => setEmail(e.target.value)} /></${Field}>
-    <${Field} label="Password"><input class="h-input" type="password" required value=${password} onInput=${(e) => setPassword(e.target.value)} /></${Field}>
-    ${err && html`<p class="h-note">${err}</p>`}
-    <button class="h-btn h-btn-primary h-btn-wide">Sign in</button>
-  </form></div>`;
-}
 
 function NewRestaurant({ api, onCreated }) {
   const [name, setName] = useState('');
@@ -64,7 +49,7 @@ function Admin({ api, session, theme, setTheme }) {
   };
   useEffect(() => { load(); }, []);
   if (denied) return html`<div class="h-login"><div class="h-login-card">
-    <p>${session.user.email} is not a Farol admin. Add it in Supabase (see README, step 4).</p>
+    <p>${session.user.email} is not a Farol admin. Add this e-mail to the admin list in Supabase (README, “Make yourself the Farol admin”).</p>
     <button class="h-link" onClick=${() => api.signOut()}>Sign out</button></div></div>`;
   const total = (rows || []).filter((r) => r.active);
   return html`<div class="hub is-admin">
@@ -108,9 +93,20 @@ function AdminApp({ api }) {
   const [session, setSession] = useState(undefined);
   const [theme, setThemeState] = useState(() => store.get('farol-hub-theme', 'dark'));
   const setTheme = (x) => { setThemeState(x); store.set('farol-hub-theme', x); };
-  useEffect(() => { api.getSession().then(setSession); return api.onAuthChange((_, s) => setSession(s)); }, []);
+  const [recovery, setRecovery] = useState(false);
+  const [lang, setLangState] = useState(() => store.get('farol-hub-lang', null) || ((navigator.language || '').startsWith('es') ? 'es' : 'en'));
+  const setLang = (l) => { setLangState(l); store.set('farol-hub-lang', l); };
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    api.getSession().then(setSession);
+    return api.onAuthChange((event, s) => { if (event === 'PASSWORD_RECOVERY') setRecovery(true); setSession(s); });
+  }, []);
+  // a listed Farol e-mail becomes admin on its first confirmed login
+  useEffect(() => { setReady(false); if (session) api.claimInvites().catch(() => {}).finally(() => setReady(true)); }, [session?.user?.id]);
   return html`<div class="fh" data-theme=${theme}>${session === undefined ? html`<div class="h-loading"><${Mark} size=${28} /></div>`
-    : session ? html`<${Admin} api=${api} session=${session} theme=${theme} setTheme=${setTheme} />` : html`<${Login} api=${api} />`}<${Toasts} /><${ConfirmHost} /></div>`;
+    : !session || recovery ? html`<${Login} api=${api} t=${HS[lang]} lang=${lang} setLang=${setLang} recovery=${recovery} title="Farol admin" tag="admin" />`
+    : !ready ? html`<div class="h-loading"><${Mark} size=${28} /></div>`
+    : html`<${Admin} api=${api} session=${session} theme=${theme} setTheme=${setTheme} />`}<${Toasts} /><${ConfirmHost} /></div>`;
 }
 
 export function mountAdminApp(el, props) { render(html`<${AdminApp} ...${props} />`, el); }

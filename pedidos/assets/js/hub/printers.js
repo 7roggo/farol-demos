@@ -59,7 +59,11 @@ export function PrintersView({ api, t, r, role, printers, device, onDevice, onPr
   const browserPrinters = printers.filter((p) => p.kind === 'browser');
   const myIds = device.printerIds ?? browserPrinters.map((p) => p.id);
 
-  const loadJobs = async () => setJobs(await api.listPrintJobs(r.id, 30));
+  // Only re-render the ticket log when something in it actually changed.
+  const loadJobs = async () => {
+    const next = await api.listPrintJobs(r.id, 30);
+    setJobs((prev) => (JSON.stringify(prev.map((j) => [j.id, j.status, j.error])) === JSON.stringify(next.map((j) => [j.id, j.status, j.error])) ? prev : next));
+  };
   useEffect(() => { loadJobs(); const i = setInterval(loadJobs, 10000); return () => clearInterval(i); }, [r.id, printers]);
 
   const updateDevice = (d) => { setDevice(r.id, d); onDevice(d); };
