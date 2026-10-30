@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Farol · Pedidos desde la mesa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+  .home { min-height: 100dvh; display: grid; place-items: center; padding: 32px 16px; }
+  .home-card { width: min(520px, 100%); }
+  .home h1 { font-size: 2.2rem; font-stretch: 120%; line-height: 1.05; margin: 14px 0 10px; }
+  .home p { color: var(--ink-2); max-width: 46ch; }
+  .home ul { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 10px; }
+  .home a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px; background: var(--paper);
+    border: 1px solid var(--line); border-radius: 10px; color: var(--ink); text-decoration: none; font-weight: 700; }
+  .home a small { font-weight: 500; color: var(--ink-3); }
+  .home a:hover { border-color: var(--ink); }
+</style>
+</head>
+<body>
+<main class="home"><div class="home-card">
+  <span class="h-mark h-mark-big" aria-hidden="true"></span>
+  <h1>Farol</h1>
+  <p>Los clientes piden desde la mesa con un QR. El restaurante acepta en su hub y la comanda sale por la impresora.</p>
+  <ul>
+    <li><a href="demo.html">Probar la demo <small>cliente + restaurante, sin registrarse</small></a></li>
+    <li><a href="hub.html">Hub del restaurante <small>entrar</small></a></li>
+    <li><a href="admin.html">Farol admin <small>crear restaurantes</small></a></li>
+  </ul>
+</div></main>
+</body>
+</html>

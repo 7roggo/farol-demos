@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Farol · Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+  .demo { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); background: var(--surface); }
+  html, body { height: 100%; }
+  .demo-bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 10px 16px; background: var(--ink); color: var(--paper); }
+  .demo-bar strong { font-stretch: 120%; font-size: 1.05rem; display: inline-flex; align-items: center; gap: 10px; }
+  .demo-bar .h-mark { box-shadow: inset 0 0 0 3px var(--paper); background: radial-gradient(circle, var(--lamp) 0 34%, transparent 36%), var(--paper); }
+  .demo-bar p { margin: 0; font-size: .9rem; opacity: .85; flex: 1; min-width: 220px; }
+  .demo-bar select, .demo-bar button { border-radius: 6px; border: 1px solid rgba(255,255,255,.35); background: transparent; color: inherit; padding: 6px 10px; font-weight: 600; }
+  .demo-bar select option { color: #000; }
+  .demo-split { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 20px; padding: 18px; min-height: 0; }
+  .demo-side { display: flex; flex-direction: column; min-height: 0; gap: 8px; }
+  .demo-label { font-size: .85rem; font-weight: 700; color: var(--ink-2); display: flex; justify-content: space-between; align-items: center; }
+  .demo-phone { flex: 1; min-height: 0; max-height: 820px; border: 10px solid #1B2130; border-radius: 38px; overflow: hidden; background: #fff; box-shadow: 0 20px 50px rgba(20,33,61,.25); }
+  .demo-hub { flex: 1; min-height: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(20,33,61,.12); }
+  .demo-tabs { display: none; }
+  @media (max-width: 900px) {
+    .demo-split { grid-template-columns: minmax(0, 1fr); padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); }
+    .demo-tabs { display: flex; gap: 6px; }
+    .demo-tabs button { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid var(--line); background: var(--paper); font-weight: 700; }
+    .demo-tabs button.is-on { background: var(--ink); color: var(--paper); }
+    .demo-side { display: none; }
+    .demo-side.is-on { display: flex; }
+    .demo-phone { border-width: 0; border-radius: 12px; }
+  }
+</style>
+<script src="config.js"></script>
+</head>
+<body>
+<div class="demo">
+  <div class="demo-bar">
+    <strong><span class="h-mark" aria-hidden="true"></span>Farol</strong>
+    <p>Pide desde el móvil a la izquierda y mira cómo llega al hub del restaurante. · Order on the phone and watch it arrive in the restaurant hub.</p>
+    <label>Mesa · Table <select id="table" aria-label="Mesa"></select></label>
+    <button id="reset" type="button">Reiniciar demo · Reset</button>
+  </div>
+  <div class="demo-split">
+    <div class="demo-tabs" role="tablist">
+      <button class="is-on" data-tab="cust" role="tab">Cliente · Customer</button>
+      <button data-tab="rest" role="tab">Restaurante · Restaurant</button>
+    </div>
+    <section class="demo-side is-on" id="side-cust" aria-label="Cliente">
+      <div class="demo-label"><span>Cliente · Customer</span><span id="table-label"></span></div>
+      <div class="demo-phone"><div id="customer" style="height:100%"></div></div>
+    </section>
+    <section class="demo-side" id="side-rest" aria-label="Restaurante" style="display:flex">
+      <div class="demo-label"><span>Restaurante · Restaurant hub</span></div>
+      <div class="demo-hub"><div id="hub" style="height:100%"></div></div>
+    </section>
+  </div>
+</div>
+<script type="module">
+  import { render } from './assets/js/vendor/preact-htm.js';
+  import { createDemoApi } from './assets/js/api/demo-api.js';
+  import { mountOrderApp } from './assets/js/order/app.js';
+  import { mountHubApp } from './assets/js/hub/app.js';
+
+  const api = createDemoApi();
+  const sel = document.getElementById('table');
+  const custEl = document.getElementById('customer');
+
+  async function tables() {
+    const list = await api.myRestaurants();
+    return list[0] ? api.listTables(list[0].id) : [];
+  }
+  async function fillTables(keep) {
+    const list = (await tables()).filter((t) => t.active);
+    sel.innerHTML = list.map((t) => `<option value="${t.token}">${t.label}</option>`).join('');
+    const pick = list.find((t) => t.token === keep) || list.find((t) => t.label === 'Mesa 3') || list[0];
+    if (pick) sel.value = pick.token;
+    showCustomer();
+  }
+  function showCustomer() {
+    render(null, custEl);
+    if (sel.value) mountOrderApp(custEl, { api, tableToken: sel.value, key: sel.value });
+  }
+  sel.addEventListener('change', showCustomer);
+  // two taps to reset (pop-up dialogs are blocked in some embedded views)
+  const resetBtn = document.getElementById('reset');
+  let armed = null;
+  resetBtn.addEventListener('click', () => {
+    if (!armed) {
+      resetBtn.textContent = '¿Seguro? Pulsa otra vez · Tap again';
+      armed = setTimeout(() => { armed = null; resetBtn.textContent = 'Reiniciar demo · Reset'; }, 4000);
+      return;
+    }
+    clearTimeout(armed);
+    try { Object.keys(localStorage).filter((k) => k.startsWith('farol-')).forEach((k) => localStorage.removeItem(k)); } catch {}
+    api.resetDemo();
+    location.reload();
+  });
+
+  // narrow screens: tabs between the two views
+  const sides = { cust: document.getElementById('side-cust'), rest: document.getElementById('side-rest') };
+  document.querySelectorAll('.demo-tabs button').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('.demo-tabs button').forEach((x) => x.classList.toggle('is-on', x === b));
+    Object.entries(sides).forEach(([k, el]) => el.classList.toggle('is-on', k === b.dataset.tab));
+  }));
+  const mq = matchMedia('(max-width: 900px)');
+  const sync = () => { sides.rest.style.display = mq.matches ? '' : 'flex'; };
+  mq.addEventListener('change', sync); sync();
+
+  // "Try it" on a table's QR card switches the phone on the left to that table
+  mountHubApp(document.getElementById('hub'), { api, onTryTable: (token) => {
+    sel.value = token; showCustomer();
+    if (mq.matches) document.querySelector('.demo-tabs button[data-tab="cust"]').click();
+  } });
+  fillTables();
+</script>
+</body>
+</html>

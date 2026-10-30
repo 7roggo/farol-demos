@@ -1,0 +1,132 @@
+// Live order board: new → preparing → ready, plus table calls (waiter / bill).
+import { html, useState, useEffect } from '../vendor/preact-htm.js';
+import { money, minutesAgo, clockTime } from '../core/util.js';
+import { Modal, attempt, toast } from './ui.js';
+import { hubError } from './strings.js';
+
+function useTick(ms = 30000) {
+  const [, set] = useState(0);
+  useEffect(() => { const i = setInterval(() => set((x) => x + 1), ms); return () => clearInterval(i); }, []);
+}
+
+function OrderCard({ o, t, r, onStatus, onDecline, onReprint, canReprint }) {
+  const age = minutesAgo(o.created_at);
+  const waited = o.status === 'accepted' ? minutesAgo(o.accepted_at || o.created_at) : age;
+  const late = o.status === 'accepted' && waited >= 20 ? 'is-late' : o.status === 'accepted' && waited >= 10 ? 'is-slow' : '';
+  return html`<article class="h-order is-${o.status} ${late}" aria-label=${`#${o.number} ${o.table_label}`}>
+    <header class="h-order-head">
+      <div class="h-order-no">#${o.number}</div>
+      <div class="h-order-table">${o.table_label || '—'}</div>
+      <div class="h-order-time">
+        <span>${clockTime(o.created_at, r.timezone)}</span>
+        <span class="h-order-age">${t.minAgo(o.status === 'accepted' ? waited : age)}</span>
+      </div>
+    </header>
+    ${o.lang === 'en' && html`<div class="h-order-flag">🇬🇧 ${t.speaksEnglish}</div>`}
+    <ul class="h-order-lines">
+      ${o.lines.map((l) => html`<li>
+        <span class="h-qty">${l.qty}×</span>
+        <span class="h-line">
+          <span class="h-line-name">${l.name_es || l.name_en}</span>
+          ${l.options?.length ? html`<span class="h-line-opts">${l.options.map((x) => x.name_es || x.name_en).join(' · ')}</span>` : null}
+          ${l.note ? html`<span class="h-line-note">${l.note}</span>` : null}
+        </span>
+        <span class="h-line-station" title=${l.station === 'bar' ? t.bar : t.kitchen}>${l.station === 'bar' ? '🍷' : '🍳'}</span>
+      </li>`)}
+    </ul>
+    ${o.note && html`<p class="h-order-note"><strong>${t.note}:</strong> ${o.note}</p>`}
+    ${o.customer_name && html`<p class="h-order-cust">${t.customer}: ${o.customer_name}</p>`}
+    <footer class="h-order-foot">
+      <span class="h-order-total">${money(o.total_cents, r.currency)}</span>
+      <div class="h-order-actions">
+        ${o.status === 'pending' && html`
+          <button class="h-btn h-btn-ghost" onClick=${() => onDecline(o)}>${t.decline}</button>
+          <button class="h-btn h-btn-go" onClick=${() => onStatus(o, 'accepted')}>${t.accept}</button>`}
+        ${o.status === 'accepted' && html`
+          ${canReprint && html`<button class="h-btn h-btn-ghost" onClick=${() => onReprint(o)}>${t.reprint}</button>`}
+          <button class="h-btn h-btn-ready" onClick=${() => onStatus(o, 'ready')}>${t.markReady}</button>`}
+        ${o.status === 'ready' && html`
+          <button class="h-btn h-btn-ghost" onClick=${() => onStatus(o, 'accepted')}>${t.backToPrep}</button>
+          <button class="h-btn h-btn-done" onClick=${() => onStatus(o, 'completed')}>${t.served}</button>`}
+      </div>
+    </footer>
+  </article>`;
+}
+
+function DeclineModal({ o, t, onClose, onConfirm }) {
+  const [reason, setReason] = useState(t.reasons[0]);
+  const [other, setOther] = useState('');
+  return html`<${Modal} title=${t.declineTitle(o.number)} onClose=${onClose}
+    footer=${html`<button class="h-btn h-btn-ghost" onClick=${onClose}>${t.cancel}</button>
+      <button class="h-btn h-btn-bad" onClick=${() => onConfirm(reason === 'other' ? other : reason)}>${t.confirmDecline}</button>`}>
+    <p class="h-muted">${t.declineReason}</p>
+    <div class="h-reasons" role="radiogroup">
+      ${t.reasons.map((x) => html`<label class="h-reason ${reason === x ? 'is-on' : ''}">
+        <input type="radio" name="reason" checked=${reason === x} onChange=${() => setReason(x)} />${x}</label>`)}
+      <label class="h-reason ${reason === 'other' ? 'is-on' : ''}">
+        <input type="radio" name="reason" checked=${reason === 'other'} onChange=${() => setReason('other')} />${t.declineOther}</label>
+    </div>
+    ${reason === 'other' && html`<input class="h-input" maxlength="140" value=${other} onInput=${(e) => setOther(e.target.value)} autofocus />`}
+  </${Modal}>`;
+}
+
+export function OrdersView({ api, t, r, orders, requests, printers, onRefresh, deviceWarning }) {
+  useTick();
+  const [declining, setDeclining] = useState(null);
+  const [mobileCol, setMobileCol] = useState('pending');
+  const [showDone, setShowDone] = useState(false);
+  const err = (e) => hubError(t, e);
+
+  const setStatus = async (o, status, reason) => {
+    const res = await attempt(() => api.setOrderStatus(o.id, status, reason), err);
+    if (res === undefined) onRefresh();
+  };
+  const reprint = (o) => attempt(async () => { await api.reprintOrder(o.id, null); toast(t.reprint + ' ✓'); }, err);
+
+  const cols = [
+    { key: 'pending', title: t.col_pending, empty: t.noneNew },
+    { key: 'accepted', title: t.col_accepted, empty: t.noneAccepted },
+    { key: 'ready', title: t.col_ready, empty: t.noneReady },
+  ];
+  const by = (s) => orders.filter((o) => o.status === s);
+  const finished = orders.filter((o) => o.status === 'completed' || o.status === 'declined').reverse();
+
+  return html`<div class="h-orders">
+    ${requests.length > 0 && html`<section class="h-requests" aria-live="assertive">
+      ${requests.map((q) => html`<div class="h-request is-${q.kind}">
+        <span class="h-request-icon" aria-hidden="true">${q.kind === 'bill' ? '🧾' : '🙋'}</span>
+        <span class="h-request-text">${q.kind === 'bill' ? t.req_bill(q.table_label) : t.req_waiter(q.table_label)}
+          <small>${t.minAgo(minutesAgo(q.created_at))}</small></span>
+        <button class="h-btn h-btn-go" onClick=${() => attempt(() => api.resolveRequest(q.id), err)}>${t.done}</button>
+      </div>`)}
+    </section>`}
+    ${deviceWarning}
+    <div class="h-col-tabs" role="tablist">
+      ${cols.map((c) => html`<button role="tab" aria-selected=${mobileCol === c.key} class=${mobileCol === c.key ? 'is-on' : ''}
+        onClick=${() => setMobileCol(c.key)}>${c.title} <span class="h-count">${by(c.key).length}</span></button>`)}
+    </div>
+    <div class="h-board">
+      ${cols.map((c) => html`<section class="h-col is-${c.key} ${mobileCol === c.key ? 'is-mobile-on' : ''}" aria-label=${c.title}>
+        <h2 class="h-col-title">${c.title} <span class="h-count">${by(c.key).length}</span></h2>
+        ${by(c.key).length === 0 && html`<p class="h-col-empty">${c.empty}</p>`}
+        ${by(c.key).map((o) => html`<${OrderCard} key=${o.id} o=${o} t=${t} r=${r} canReprint=${printers.length > 0}
+          onStatus=${setStatus} onDecline=${setDeclining} onReprint=${reprint} />`)}
+      </section>`)}
+    </div>
+    ${finished.length > 0 && html`<section class="h-finished">
+      <button class="h-link" aria-expanded=${showDone} onClick=${() => setShowDone(!showDone)}>
+        ${t.finishedToday} (${finished.length}) ${showDone ? '▴' : '▾'}</button>
+      ${showDone && html`<ul class="h-finished-list">
+        ${finished.map((o) => html`<li class="is-${o.status}">
+          <span class="h-fin-no">#${o.number}</span><span>${o.table_label}</span>
+          <span class="h-muted">${clockTime(o.created_at, r.timezone)}</span>
+          <span class="h-fin-items">${o.lines.map((l) => `${l.qty}× ${l.name_es || l.name_en}`).join(', ')}</span>
+          <span>${o.status === 'declined' ? `${t.declined}${o.decline_reason ? ` · ${o.decline_reason}` : ''}` : money(o.total_cents, r.currency)}</span>
+          ${o.status === 'completed' && html`<button class="h-link" onClick=${() => setStatus(o, 'ready')}>${t.reopen}</button>`}
+        </li>`)}
+      </ul>`}
+    </section>`}
+    ${declining && html`<${DeclineModal} o=${declining} t=${t} onClose=${() => setDeclining(null)}
+      onConfirm=${(reason) => { setStatus(declining, 'declined', reason); setDeclining(null); }} />`}
+  </div>`;
+}
