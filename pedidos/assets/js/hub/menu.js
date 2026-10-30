@@ -1,9 +1,9 @@
 // Menu editor: categories, items, prices, photos, allergens, options, sold-out, auto-translate.
-import { html, useState, useEffect } from '../vendor/preact-htm.js';
-import { money, parseMoney, ALLERGENS, allergenById, uid } from '../core/util.js';
-import { Modal, Switch, Field, attempt, toast, Empty, askConfirm } from './ui.js';
-import { hubError } from './strings.js';
-import { Icon } from './icons.js';
+import { html, useState, useEffect } from '../vendor/preact-htm.js?v=202610300619';
+import { money, parseMoney, ALLERGENS, allergenById, uid } from '../core/util.js?v=202610300619';
+import { Modal, Switch, Field, attempt, toast, Empty, askConfirm } from './ui.js?v=202610300619';
+import { hubError } from './strings.js?v=202610300619';
+import { Icon } from './icons.js?v=202610300619';
 
 const euros = (cents) => (cents / 100).toFixed(2).replace('.', ',');
 
