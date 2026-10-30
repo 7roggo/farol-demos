@@ -5,6 +5,7 @@ import { randomToken } from '../core/util.js';
 import { siteBase } from '../api/index.js';
 import { Switch, attempt, toast, Empty, askConfirm } from './ui.js';
 import { hubError } from './strings.js';
+import { Icon } from './icons.js';
 
 export function tableUrl(api, token) {
   return `${siteBase()}order.html?t=${token}${api.mode === 'demo' ? '&demo' : ''}`;
@@ -61,7 +62,7 @@ export function TablesView({ api, t, r, role, onTryTable }) {
     ${owner && html`<div class="h-toolbar h-toolbar-wrap">
       <form class="h-inline-form" onSubmit=${(e) => { e.preventDefault(); if (label.trim()) { add([label.trim()]); setLabel(''); } }}>
         <input class="h-input" placeholder=${t.tableName} value=${label} maxlength="30" onInput=${(e) => setLabel(e.target.value)} aria-label=${t.tableName} />
-        <button class="h-btn h-btn-go">+ ${t.addTable}</button>
+        <button class="h-btn h-btn-primary"><${Icon} name="plus" size=${16} />${t.addTable}</button>
       </form>
       <form class="h-inline-form" onSubmit=${(e) => {
         e.preventDefault();
@@ -76,7 +77,8 @@ export function TablesView({ api, t, r, role, onTryTable }) {
         <button class="h-btn h-btn-ghost">${t.create}</button>
       </form>
       <span class="h-grow"></span>
-      <button class="h-btn h-btn-ghost" disabled=${!tables.length} onClick=${() => printSheet(r, tables, api, t)}>⎙ ${t.printQrSheet}</button>
+      <button class="h-btn h-btn-ghost" disabled=${!tables.length} onClick=${() => printSheet(r, tables, api, t)}>
+        <${Icon} name="printers" size=${16} />${t.printQrSheet}</button>
     </div>`}
     ${!tables.length && html`<${Empty}>${t.noTables}</${Empty}>`}
     <ul class="h-qr-grid">

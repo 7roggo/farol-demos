@@ -253,6 +253,7 @@ export function OrderApp({ api, tableToken, slug }) {
   const total = cart.reduce((s, l) => s + (itemsById[l.item_id] ? unitPrice(itemsById[l.item_id], l.choices) * l.qty : 0), 0);
 
   useEffect(() => { if (r) document.title = r.name; }, [r?.name]);
+  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
 
   const addLine = (line) => {
     const exists = cart.some((l) => l.key === line.key);

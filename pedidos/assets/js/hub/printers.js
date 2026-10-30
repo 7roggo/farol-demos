@@ -4,6 +4,7 @@ import { minutesAgo, clockTime } from '../core/util.js';
 import { Modal, Field, attempt, toast, Empty, askConfirm } from './ui.js';
 import { hubError } from './strings.js';
 import { setDevice } from './printing.js';
+import { Icon } from './icons.js';
 
 const KIOSK_WIN = '--kiosk-printing';
 const KIOSK_MAC = 'open -a "Google Chrome" --args --kiosk-printing';
@@ -18,7 +19,7 @@ function CopyBox({ value, t }) {
     <code>${value}</code>
     <button class="h-btn h-btn-small h-btn-ghost" onClick=${async () => {
       try { await navigator.clipboard.writeText(value); toast(t.copied); } catch { toast(value); }
-    }}>${t.copyLink.split(' ')[0]}</button>
+    }}><${Icon} name="copy" size=${14} />${t.copyLink.split(' ')[0]}</button>
   </div>`;
 }
 
@@ -27,7 +28,7 @@ function PrinterEditor({ api, t, rid, printer, onClose, onSaved }) {
   const err = (e) => hubError(t, e);
   return html`<${Modal} title=${printer?.id ? f.name : t.addPrinter} onClose=${onClose}
     footer=${html`<button class="h-btn h-btn-ghost" onClick=${onClose}>${t.cancel}</button>
-      <button class="h-btn h-btn-go" disabled=${!f.name.trim()} onClick=${async () => {
+      <button class="h-btn h-btn-primary" disabled=${!f.name.trim()} onClick=${async () => {
         const saved = await attempt(() => api.savePrinter({ ...f, name: f.name.trim() }), err);
         if (saved) { onSaved(saved); onClose(); }
       }}>${t.save}</button>`}>
@@ -94,7 +95,7 @@ export function PrintersView({ api, t, r, role, printers, device, onDevice, onPr
     <section class="h-panel">
       <div class="h-panel-head">
         <h2>${t.nav_printers}</h2>
-        ${owner && html`<button class="h-btn h-btn-go" onClick=${() => setEditing({})}>+ ${t.addPrinter}</button>`}
+        ${owner && html`<button class="h-btn h-btn-primary" onClick=${() => setEditing({})}><${Icon} name="plus" size=${16} />${t.addPrinter}</button>`}
       </div>
       ${!printers.length && html`<${Empty}>${t.noPrinters}</${Empty}>`}
       <ul class="h-printer-list">
@@ -104,7 +105,7 @@ export function PrintersView({ api, t, r, role, printers, device, onDevice, onPr
           return html`<li class="h-printer">
             <div class="h-printer-main">
               <strong>${p.name}</strong>
-              <span class="h-badge">${p.kind === 'browser' ? '🖥 ' + t.type_browser.split(' ')[0] : p.kind === 'star' ? 'Star' : 'Epson'}</span>
+              <span class="h-badge">${p.kind === 'browser' ? t.kindBrowser : p.kind === 'star' ? 'Star CloudPRNT' : 'Epson SDP'}</span>
               <span class="h-badge">${t[p.station]}</span>
               <span class="h-badge">${p.paper_mm} mm</span>
               ${p.kind === 'browser' && myIds.includes(p.id) && html`<span class="h-badge is-go">${t.devicePrints}</span>`}

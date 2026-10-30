@@ -3,6 +3,7 @@ import { html, useState, useEffect } from '../vendor/preact-htm.js';
 import { money, parseMoney, ALLERGENS, allergenById, uid } from '../core/util.js';
 import { Modal, Switch, Field, attempt, toast, Empty, askConfirm } from './ui.js';
 import { hubError } from './strings.js';
+import { Icon } from './icons.js';
 
 const euros = (cents) => (cents / 100).toFixed(2).replace('.', ',');
 
@@ -13,7 +14,7 @@ function TranslateBtn({ api, t, from, onDone }) {
       setBusy(true);
       try { const [x] = await api.translate([from], 'es', 'en'); onDone(x); } catch { toast(t.translateFailed, 'bad'); }
       setBusy(false);
-    }}>${busy ? '…' : `${t.translate} →`}</button>`;
+    }}><${Icon} name="globe" size=${14} />${busy ? '…' : t.translate}</button>`;
 }
 
 function OptionsEditor({ t, groups, onChange }) {
@@ -36,7 +37,7 @@ function OptionsEditor({ t, groups, onChange }) {
         <input class="h-input h-input-price" inputmode="decimal" placeholder=${t.extraPrice} value=${c.price_cents ? euros(c.price_cents) : ''}
           onChange=${(e) => setChoice(gi, ci, { price_cents: parseMoney(e.target.value) })} aria-label=${t.extraPrice} />
         <button type="button" class="h-icon-btn" aria-label=${t.delete}
-          onClick=${() => set(gi, { choices: g.choices.filter((_, i) => i !== ci) })}>×</button>
+          onClick=${() => set(gi, { choices: g.choices.filter((_, i) => i !== ci) })}><${Icon} name="x" size=${15} /></button>
       </div>`)}
       <button type="button" class="h-link" onClick=${() => set(gi, { choices: [...g.choices, { id: uid().slice(0, 8), name_es: '', name_en: '', price_cents: 0 }] })}>+ ${t.addChoice}</button>
     </fieldset>`)}
@@ -83,7 +84,7 @@ function ItemEditor({ api, t, rid, item, categories, onClose, onSaved }) {
       }}>${t.delete}</button>`}
       <span class="h-grow"></span>
       <button class="h-btn h-btn-ghost" onClick=${onClose}>${t.cancel}</button>
-      <button class="h-btn h-btn-go" disabled=${busy || !(f.name_es.trim() || f.name_en.trim())} onClick=${save}>${busy ? t.saving : t.save}</button>`}>
+      <button class="h-btn h-btn-primary" disabled=${busy || !(f.name_es.trim() || f.name_en.trim())} onClick=${save}>${busy ? t.saving : t.save}</button>`}>
     <div class="h-grid-2">
       <${Field} label=${t.nameEs}><input class="h-input" value=${f.name_es} onInput=${(e) => set({ name_es: e.target.value })} /></${Field}>
       <${Field} label=${html`${t.nameEn} <${TranslateBtn} api=${api} t=${t} from=${f.name_es} onDone=${(x) => set({ name_en: x })} />`}>
@@ -102,12 +103,12 @@ function ItemEditor({ api, t, rid, item, categories, onClose, onSaved }) {
         ${ALLERGENS.map((a) => html`<label class="h-allergen ${f.allergens.includes(a.id) ? 'is-on' : ''}">
           <input type="checkbox" checked=${f.allergens.includes(a.id)}
             onChange=${(e) => set({ allergens: e.target.checked ? [...f.allergens, a.id] : f.allergens.filter((x) => x !== a.id) })} />
-          <span aria-hidden="true">${a.icon}</span>${a.es}</label>`)}
+          ${a.es}</label>`)}
       </div>
     </fieldset>
     <fieldset class="h-fieldset"><legend>${t.photo}</legend>
       <div class="h-photo">
-        ${f.image_url ? html`<img src=${f.image_url} alt="" />` : html`<div class="h-photo-empty" aria-hidden="true">📷</div>`}
+        ${f.image_url ? html`<img src=${f.image_url} alt="" />` : html`<div class="h-photo-empty"><${Icon} name="photo" size=${26} /></div>`}
         <div class="h-photo-actions">
           <label class="h-btn h-btn-ghost h-btn-small">${t.uploadPhoto}
             <input type="file" accept="image/*" hidden onChange=${(e) => upload(e.target.files[0])} /></label>
@@ -135,7 +136,7 @@ function CategoryEditor({ api, t, rid, cat, nextSort, onClose, onSaved }) {
       }}>${t.delete}</button>`}
       <span class="h-grow"></span>
       <button class="h-btn h-btn-ghost" onClick=${onClose}>${t.cancel}</button>
-      <button class="h-btn h-btn-go" disabled=${!(f.name_es.trim() || f.name_en.trim())}
+      <button class="h-btn h-btn-primary" disabled=${!(f.name_es.trim() || f.name_en.trim())}
         onClick=${async () => { if (await attempt(() => api.saveCategory(f), err)) { onSaved(); onClose(); } }}>${t.save}</button>`}>
     <${Field} label=${t.nameEs}><input class="h-input" value=${f.name_es} onInput=${(e) => setF({ ...f, name_es: e.target.value })} /></${Field}>
     <${Field} label=${html`${t.nameEn} <${TranslateBtn} api=${api} t=${t} from=${f.name_es} onDone=${(x) => setF({ ...f, name_en: x })} />`}>
@@ -143,7 +144,7 @@ function CategoryEditor({ api, t, rid, cat, nextSort, onClose, onSaved }) {
     <${Field} label=${t.station}>
       <div class="h-seg">
         ${['kitchen', 'bar'].map((s) => html`<label class=${f.station === s ? 'is-on' : ''}>
-          <input type="radio" name="station" checked=${f.station === s} onChange=${() => setF({ ...f, station: s })} />${s === 'bar' ? `🍷 ${t.bar}` : `🍳 ${t.kitchen}`}</label>`)}
+          <input type="radio" name="station" checked=${f.station === s} onChange=${() => setF({ ...f, station: s })} /><${Icon} name=${s} size=${15} />${s === 'bar' ? t.bar : t.kitchen}</label>`)}
       </div></${Field}>
   </${Modal}>`;
 }
@@ -212,8 +213,8 @@ export function MenuView({ api, t, r, role }) {
   return html`<div class="h-menu">
     <div class="h-toolbar">
       ${owner ? html`
-        <button class="h-btn h-btn-go" onClick=${() => setEditing({ type: 'cat', value: null })}>+ ${t.addCategory}</button>
-        <button class="h-btn h-btn-ghost" disabled=${translating} onClick=${translateMissing}>${translating ? t.translating : `🌐 ${t.translateMissing}`}</button>`
+        <button class="h-btn h-btn-primary" onClick=${() => setEditing({ type: 'cat', value: null })}><${Icon} name="plus" size=${16} />${t.addCategory}</button>
+        <button class="h-btn h-btn-ghost" disabled=${translating} onClick=${translateMissing}><${Icon} name="globe" size=${16} />${translating ? t.translating : t.translateMissing}</button>`
         : html`<p class="h-muted">${t.staffMenuHint}</p>`}
     </div>
     ${!cats.length && html`<${Empty}>${t.emptyMenu}</${Empty}>`}
@@ -222,12 +223,12 @@ export function MenuView({ api, t, r, role }) {
       return html`<section class="h-cat ${c.active ? '' : 'is-hidden'}">
         <header class="h-cat-head">
           <h2>${c.name_es || c.name_en}${c.name_en && c.name_es ? html` <small>${c.name_en}</small>` : null}</h2>
-          <span class="h-badge is-${c.station}">${c.station === 'bar' ? `🍷 ${t.bar}` : `🍳 ${t.kitchen}`}</span>
+          <span class="h-badge is-${c.station}"><${Icon} name=${c.station === 'bar' ? 'bar' : 'kitchen'} size=${13} />${c.station === 'bar' ? t.bar : t.kitchen}</span>
           ${owner && html`<div class="h-cat-tools">
             <${Switch} checked=${c.active} label=${c.active ? t.visible : t.hidden}
               onChange=${(v) => attempt(() => api.saveCategory({ ...strip(c), active: v }), err).then(load)} />
-            <button class="h-icon-btn" aria-label=${t.moveUp} disabled=${ci === 0} onClick=${() => move(sortedCats, ci, -1, api.saveCategory)}>↑</button>
-            <button class="h-icon-btn" aria-label=${t.moveDown} disabled=${ci === sortedCats.length - 1} onClick=${() => move(sortedCats, ci, 1, api.saveCategory)}>↓</button>
+            <button class="h-icon-btn" aria-label=${t.moveUp} disabled=${ci === 0} onClick=${() => move(sortedCats, ci, -1, api.saveCategory)}><${Icon} name="up" size=${15} /></button>
+            <button class="h-icon-btn" aria-label=${t.moveDown} disabled=${ci === sortedCats.length - 1} onClick=${() => move(sortedCats, ci, 1, api.saveCategory)}><${Icon} name="down" size=${15} /></button>
             <button class="h-btn h-btn-ghost h-btn-small" onClick=${() => setEditing({ type: 'cat', value: strip(c) })}>${t.edit}</button>
           </div>`}
         </header>
@@ -235,24 +236,24 @@ export function MenuView({ api, t, r, role }) {
           ${list.map((it, ii) => html`<li class="h-item ${it.sold_out ? 'is-out' : ''} ${it.active ? '' : 'is-hidden'}">
             ${it.image_url ? html`<img class="h-item-img" src=${it.image_url} alt="" />` : html`<span class="h-item-img is-empty" aria-hidden="true"></span>`}
             <div class="h-item-main">
-              <div class="h-item-name">${it.name_es || it.name_en}${!it.name_en && owner ? html` <span class="h-badge is-warn">EN?</span>` : null}</div>
+              <div class="h-item-name">${it.name_es || it.name_en}${!it.name_en && owner ? html` <span class="h-tag is-warn">EN</span>` : null}</div>
               <div class="h-item-meta">
                 <span>${money(it.price_cents, r.currency)}</span>
                 ${it.options?.length ? html`<span>${t.optCount(it.options.length)}</span>` : null}
-                ${it.allergens?.length ? html`<span title=${it.allergens.map((a) => allergenById[a]?.es).join(', ')}>${it.allergens.map((a) => allergenById[a]?.icon).join('')}</span>` : null}
+                ${it.allergens?.length ? html`<span>${it.allergens.map((a) => allergenById[a]?.es).join(', ')}</span>` : null}
               </div>
             </div>
             <div class="h-item-tools">
               <${Switch} checked=${it.sold_out} tone="bad" label=${t.soldOut} onChange=${(v) => patchItem(it, { sold_out: v })} />
               ${owner && html`
                 <${Switch} checked=${it.active} label=${t.visible} onChange=${(v) => patchItem(it, { active: v })} />
-                <button class="h-icon-btn" aria-label=${t.moveUp} disabled=${ii === 0} onClick=${() => move(list, ii, -1, api.saveItem)}>↑</button>
-                <button class="h-icon-btn" aria-label=${t.moveDown} disabled=${ii === list.length - 1} onClick=${() => move(list, ii, 1, api.saveItem)}>↓</button>
+                <button class="h-icon-btn" aria-label=${t.moveUp} disabled=${ii === 0} onClick=${() => move(list, ii, -1, api.saveItem)}><${Icon} name="up" size=${15} /></button>
+                <button class="h-icon-btn" aria-label=${t.moveDown} disabled=${ii === list.length - 1} onClick=${() => move(list, ii, 1, api.saveItem)}><${Icon} name="down" size=${15} /></button>
                 <button class="h-btn h-btn-ghost h-btn-small" onClick=${() => setEditing({ type: 'item', value: strip(it) })}>${t.edit}</button>`}
             </div>
           </li>`)}
         </ul>
-        ${owner && html`<button class="h-link h-add-item" onClick=${() => setEditing({ type: 'item', value: { category_id: c.id, sort: list.length } })}>+ ${t.addItem}</button>`}
+        ${owner && html`<button class="h-add-item" onClick=${() => setEditing({ type: 'item', value: { category_id: c.id, sort: list.length } })}><${Icon} name="plus" size=${15} />${t.addItem}</button>`}
       </section>`;
     })}
     ${editing?.type === 'item' && html`<${ItemEditor} api=${api} t=${t} rid=${r.id} item=${editing.value} categories=${sortedCats}

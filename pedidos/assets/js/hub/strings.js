@@ -2,7 +2,7 @@
 const es = {
   // shell
   nav_orders: 'Pedidos', nav_menu: 'Carta', nav_tables: 'Mesas y QR', nav_printers: 'Impresoras', nav_stats: 'Ventas', nav_settings: 'Ajustes',
-  signOut: 'Cerrar sesión', live: 'En directo', offline: 'Sin conexión, reintentando…', previewMenu: 'Ver carta del cliente',
+  signOut: 'Cerrar sesión', themeLight: 'Tema claro', themeDark: 'Tema oscuro', deviceNoPrint: 'Esta pantalla no imprime comandas.', setUp: 'Configurar', live: 'En directo', offline: 'Sin conexión, reintentando…', previewMenu: 'Ver carta del cliente',
   startShift: 'Empezar turno', startShiftText: 'Activa el sonido para oír los pedidos nuevos y las llamadas de las mesas.',
   soundOn: 'Sonido activado', soundOff: 'Sonido apagado', demoBanner: 'Modo demo: los datos se guardan solo en este navegador.',
   open: 'Abierto', closedHours: 'Cerrado (fuera de horario)', pausedUntil: (t) => `Pausado hasta las ${t}`, pausedOpenEnded: 'Pedidos pausados',
@@ -50,7 +50,7 @@ const es = {
   methodScreen: 'Mostrar en pantalla', methodScreenHint: 'Sin impresora: la comanda aparece en esta pantalla.',
   kioskTitle: 'Imprimir sin la ventana de «Imprimir»', kioskWin: 'Windows: crea un acceso directo a Chrome y añade al final del destino:',
   kioskMac: 'Mac: abre Terminal y ejecuta:', kioskDefault: 'Pon la impresora de tickets como impresora predeterminada del ordenador.',
-  addPrinter: 'Añadir impresora', printerName: 'Nombre', printerType: 'Tipo', paper: 'Papel', test: 'Prueba', online: 'Conectada', notSeen: 'Sin señal',
+  kindBrowser: 'Pantalla del hub', addPrinter: 'Añadir impresora', printerName: 'Nombre', printerType: 'Tipo', paper: 'Papel', test: 'Prueba', online: 'Conectada', notSeen: 'Sin señal',
   lastSeen: (m) => (m < 1 ? 'Conectada' : m < 120 ? `Vista hace ${m} min` : 'Sin señal'),
   type_browser: 'Impresora en este ordenador o tablet', type_browser_hint: 'Opción 1: la pantalla del hub imprime. Barato, vale casi cualquier impresora de tickets.',
   type_star: 'Star Micronics (CloudPRNT)', type_star_hint: 'Opción 3: la impresora recoge las comandas sola. No necesita ordenador encendido.',
@@ -83,7 +83,7 @@ const es = {
 
 const en = {
   nav_orders: 'Orders', nav_menu: 'Menu', nav_tables: 'Tables & QR', nav_printers: 'Printers', nav_stats: 'Sales', nav_settings: 'Settings',
-  signOut: 'Sign out', live: 'Live', offline: 'Offline, reconnecting…', previewMenu: 'View customer menu',
+  signOut: 'Sign out', themeLight: 'Light theme', themeDark: 'Dark theme', deviceNoPrint: "This screen doesn't print tickets.", setUp: 'Set up', live: 'Live', offline: 'Offline, reconnecting…', previewMenu: 'View customer menu',
   startShift: 'Start shift', startShiftText: 'Turn the sound on to hear new orders and table calls.',
   soundOn: 'Sound on', soundOff: 'Sound off', demoBanner: 'Demo mode: data is saved in this browser only.',
   open: 'Open', closedHours: 'Closed (outside opening hours)', pausedUntil: (t) => `Paused until ${t}`, pausedOpenEnded: 'Ordering paused',
@@ -126,7 +126,7 @@ const en = {
   methodScreen: 'Show on screen', methodScreenHint: 'No printer: the ticket appears on this screen.',
   kioskTitle: 'Print without the "Print" window', kioskWin: 'Windows: make a Chrome shortcut and add this to the end of its target:',
   kioskMac: 'Mac: open Terminal and run:', kioskDefault: "Set the receipt printer as the computer's default printer.",
-  addPrinter: 'Add printer', printerName: 'Name', printerType: 'Type', paper: 'Paper', test: 'Test', online: 'Connected', notSeen: 'No signal',
+  kindBrowser: 'Hub screen', addPrinter: 'Add printer', printerName: 'Name', printerType: 'Type', paper: 'Paper', test: 'Test', online: 'Connected', notSeen: 'No signal',
   lastSeen: (m) => (m < 1 ? 'Connected' : m < 120 ? `Seen ${m} min ago` : 'No signal'),
   type_browser: 'Printer on this computer or tablet', type_browser_hint: 'Option 1: the hub screen prints. Cheap, works with almost any receipt printer.',
   type_star: 'Star Micronics (CloudPRNT)', type_star_hint: 'Option 3: the printer fetches tickets by itself. No computer needs to stay on.',

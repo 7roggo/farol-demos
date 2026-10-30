@@ -58,7 +58,7 @@ function Team({ api, t, r }) {
       <select class="h-input h-input-short" value=${role} onChange=${(e) => setRole(e.target.value)} aria-label=${t.role}>
         <option value="staff">${t.staff}</option><option value="owner">${t.owner}</option>
       </select>
-      <button class="h-btn h-btn-go">${t.invite}</button>
+      <button class="h-btn h-btn-primary">${t.invite}</button>
     </form>
   </section>`;
 }
@@ -118,7 +118,7 @@ export function SettingsView({ api, t, r, lang, role, onSaved }) {
     </section>
 
     <div class="h-sticky-save">
-      <button class="h-btn h-btn-go" disabled=${busy || !f.name.trim()} onClick=${save}>${busy ? t.saving : t.save}</button>
+      <button class="h-btn h-btn-primary" disabled=${busy || !f.name.trim()} onClick=${save}>${busy ? t.saving : t.save}</button>
     </div>
 
     <${Team} api=${api} t=${t} r=${r} />

@@ -3,6 +3,9 @@ import { html, render, useState, useEffect } from '../vendor/preact-htm.js';
 import { money, slugify } from '../core/util.js';
 import { Field, Switch, Toasts, ConfirmHost, toast, attempt } from '../hub/ui.js';
 import { siteBase } from '../api/index.js';
+import { Mark, Icon } from '../hub/icons.js';
+import { ThemeButton } from '../hub/app.js';
+import { store } from '../core/util.js';
 
 const msg = (e) => ({ not_allowed: 'This account is not a Farol admin.', duplicate_slug: 'That web address is already taken.' }[e.code]
   || (/duplicate key|unique/i.test(e.message) ? 'That web address is already taken.' : e.message || 'Something went wrong.'));
@@ -15,11 +18,11 @@ function Login({ api }) {
     e.preventDefault(); setErr('');
     try { await api.signIn(email.trim(), password); } catch (x) { setErr(msg(x)); }
   }}>
-    <div class="h-login-brand"><span class="h-mark" aria-hidden="true"></span>Farol admin</div>
+    <div class="h-login-brand"><${Mark} size=${30} /><span class="h-wordmark">Farol</span><span class="h-tag">admin</span></div>
     <${Field} label="E-mail"><input class="h-input" type="email" required value=${email} onInput=${(e) => setEmail(e.target.value)} /></${Field}>
     <${Field} label="Password"><input class="h-input" type="password" required value=${password} onInput=${(e) => setPassword(e.target.value)} /></${Field}>
     ${err && html`<p class="h-note">${err}</p>`}
-    <button class="h-btn h-btn-go h-btn-wide">Sign in</button>
+    <button class="h-btn h-btn-primary h-btn-wide">Sign in</button>
   </form></div>`;
 }
 
@@ -49,11 +52,11 @@ function NewRestaurant({ api, onCreated }) {
         <label class="h-check"><input type="checkbox" checked=${sample} onChange=${(e) => setSample(e.target.checked)} /> Sample tapas menu and 13 tables (easy to edit)</label>
       </${Field}>
     </div>
-    <button class="h-btn h-btn-go" disabled=${busy || !name.trim() || slug.length < 2}>${busy ? 'Creating…' : 'Create hub'}</button>
+    <button class="h-btn h-btn-primary" disabled=${busy || !name.trim() || slug.length < 2}>${busy ? 'Creating…' : 'Create hub'}</button>
   </form>`;
 }
 
-function Admin({ api, session }) {
+function Admin({ api, session, theme, setTheme }) {
   const [rows, setRows] = useState(null);
   const [denied, setDenied] = useState(false);
   const load = async () => {
@@ -67,9 +70,10 @@ function Admin({ api, session }) {
   return html`<div class="hub is-admin">
     ${api.mode === 'demo' && html`<div class="h-demo-banner">Demo mode: data is saved in this browser only.</div>`}
     <header class="h-top">
-      <div class="h-top-brand"><span class="h-mark" aria-hidden="true"></span><span class="h-rest-name">Farol admin</span></div>
+      <div class="h-top-title"><${Mark} size=${24} /><span class="h-wordmark">Farol</span><span class="h-tag">admin</span></div>
       <div class="h-top-tools"><span class="h-muted h-hide-sm">${session.user.email}</span>
-        <button class="h-link" onClick=${() => api.signOut()}>Sign out</button></div>
+        <${ThemeButton} theme=${theme} setTheme=${setTheme} t=${{ themeLight: 'Light theme', themeDark: 'Dark theme' }} />
+        <button class="h-icon-btn" onClick=${() => api.signOut()} aria-label="Sign out" title="Sign out"><${Icon} name="logout" /></button></div>
     </header>
     <main class="h-main h-main-full">
       <div class="h-kpis">
@@ -102,8 +106,11 @@ function Admin({ api, session }) {
 
 function AdminApp({ api }) {
   const [session, setSession] = useState(undefined);
+  const [theme, setThemeState] = useState(() => store.get('farol-hub-theme', 'dark'));
+  const setTheme = (x) => { setThemeState(x); store.set('farol-hub-theme', x); };
   useEffect(() => { api.getSession().then(setSession); return api.onAuthChange((_, s) => setSession(s)); }, []);
-  return html`${session === undefined ? html`<div class="h-loading">…</div>` : session ? html`<${Admin} api=${api} session=${session} />` : html`<${Login} api=${api} />`}<${Toasts} /><${ConfirmHost} />`;
+  return html`<div class="fh" data-theme=${theme}>${session === undefined ? html`<div class="h-loading"><${Mark} size=${28} /></div>`
+    : session ? html`<${Admin} api=${api} session=${session} theme=${theme} setTheme=${setTheme} />` : html`<${Login} api=${api} />`}<${Toasts} /><${ConfirmHost} /></div>`;
 }
 
 export function mountAdminApp(el, props) { render(html`<${AdminApp} ...${props} />`, el); }
